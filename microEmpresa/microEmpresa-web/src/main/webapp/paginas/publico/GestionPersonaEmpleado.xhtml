@@ -1,0 +1,102 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+	<ui:define name="cuerpo">
+		<h:form prependId="false">
+		
+		<p:tabView id="tablaDatosEmpleado" style="margin-top:100px">
+					<p:tab title="Registro de Empleados" dynamic="true" cache="true">
+
+			<p:fieldset legend="Busqueda" style="margin-top:10px">
+				<h:panelGrid id="busEmp" columns="2">
+
+					<p:commandButton styleClass="ui-priority-primary" value="Buscar"
+						process="@this busEmp" update="panelEmpleado"
+						action="#{gestionEmpleadoController.buscarEmpleado()}"/>
+						
+					<p:inputText id="tfbusEmpl" class="form-control"
+						value="#{gestionEmpleadoController.cedulaBuscar}" placeholder="ingrese Documento"/>
+				</h:panelGrid>
+			</p:fieldset>
+
+			<p:fieldset legend="Datos Empleado" style="margin-top:10px">
+				<h:panelGrid id="panelEmpleado" columns="2">
+
+					<p:outputLabel for="tfnomEmple" id="nomcli" value="Nombre" />
+					<p:inputText id="tfnomEmple" class="form-control"
+						value="#{gestionEmpleadoController.nombre}" placeholder="Nombre persona"/>
+
+					<p:outputLabel for="tfApellidoEmpl" id="apellCliente" value="Apellido" />
+					<p:inputText id="tfApellidoEmpl" class="form-control"
+						value="#{gestionEmpresaController.telefono}" placeholder="Apellido persona"/>
+						
+					<p:outputLabel for="tfCedEmpl" id="CedClienteRegistrar" value="Cedula" />
+					<p:inputText id="tfCedEmpl" class="form-control"
+						value="#{gestionEmpleadoController.cedulaRegistrar}" placeholder="Cedula persona"/>
+
+					<p:outputLabel for="tftelefonoEmpl" id="telEmpl" value="Telefono" />
+					<p:inputText id="tftelefonoEmpl" class="form-control"
+						value="#{gestionEmpleadoController.telefono}" placeholder="Telefono persona"/>
+						
+					<p:outputLabel for="tfSalarioEmpl" id="salarioEmpl" value="Salario" />
+					<p:inputText id="tfSalarioEmpl" class="form-control"
+						value="#{gestionEmpleadoController.salario}" placeholder="Salario persona"/>
+
+
+					<p:outputLabel for="tfGeneroEmpl" id="generoEmp" value="Genero" />
+					<h:selectOneMenu id="tfGeneroEmpl" class="form-control" value="#{gestionEmpleadoController.generoSeleccionado}">
+						<f:selectItem itemValue="0" itemLabel="Seleccione..." />
+						<f:selectItems  value="#{gestionEmpleadoController.listaGeneros}"
+							var="gen" itemValue="#{gen.codigo}" itemLabel="#{gen.nombre}" />
+					</h:selectOneMenu>
+					
+					<p:outputLabel for="tfFechaNacimientoEmpl" id="fechaNacEmpl" value="Fecha nacimiento" />
+					<p:calendar id="tfFechaNacimientoEmpl" class="form-control"
+						value="#{gestionEmpleadoController.fechaNacimiento}" pattern="dd/MMM/yyyy" showOn="button"/>
+						
+					<p:outputLabel for="tfFechaIngresotoEmpl" id="fechaIngreEmpl" value="Fecha de ingreso" />
+					<p:calendar id="tfFechaIngresotoEmpl" class="form-control"
+						value="#{gestionEmpleadoController.fechaIngreso}" pattern="dd/MMM/yyyy" showOn="button"/>
+						
+					<p:outputLabel for="tfRolEmpl" id="rolEmpl" value="Rol" />
+					<h:selectOneMenu id="tfRolEmpl" class="form-control" value="#{gestionEmpleadoController.rolSeleccionado}">
+						<f:selectItem itemValue="0" itemLabel="Empleado" />
+						<f:selectItems  value="#{gestionEmpleadoController.listaRoles}"
+							var="rol" itemValue="#{rol.codigo}" itemLabel="#{rol.nombre}" itemDisabled="true"/>
+					</h:selectOneMenu>
+					
+					<p:outputLabel for="tfMunicipioEmpl" id="municpEmpl" value="Ciudad/Municipio" />
+					<h:selectOneMenu id="tfMunicipioEmpl" class="form-control" value="#{gestionEmpleadoController.municipioSeleccionado}">
+						<f:selectItem itemValue="0" itemLabel="Seleccione..." />
+						<f:selectItems  value="#{gestionEmpleadoController.listaMunicipios}"
+							var="mun" itemValue="#{mun.codigo}" itemLabel="#{mun.nombre}" />
+					</h:selectOneMenu>
+					
+					<p:outputLabel for="tfAreasEmpresaEmpl" id="areasEmpresaEmpl" value="Area de la empresa" />
+					<h:selectOneMenu id="tfAreasEmpresaEmpl" class="form-control" value="#{gestionEmpleadoController.areaSeleccionado}">
+						<f:selectItem itemValue="0" itemLabel="Seleccione..." />
+						<f:selectItems  value="#{gestionEmpleadoController.listaAreasEmpresa}"
+							var="ar" itemValue="#{ar.codigo}" itemLabel="#{ar.nombre}" />
+					</h:selectOneMenu>
+					
+				</h:panelGrid>
+				
+				<p:commandButton styleClass="ui-priority-primary" value="Registrar" update=":tablaDatosEmpleado:panelEmpleado"
+				action="#{gestionEmpleadoController.registrar()}" style="margin-top:15px"/>
+
+			<p:commandButton styleClass="ui-priority-primary" value="Editar" update=":tablaDatosEmpleado:panelEmpleado" 
+			action="#{gestionEmpleadoController.editar()}" style="margin-top:15px"/>
+
+			</p:fieldset>
+						
+			
+			</p:tab>	
+			
+			</p:tabView>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

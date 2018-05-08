@@ -1,0 +1,89 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+	<ui:define name="cuerpo">
+		<h:form prependId="false">
+		
+		<p:tabView id="tablaDatosEmpresa" style="margin-top:100px">
+					<p:tab title="Gestion de Roles de la Empresa" dynamic="true" cache="true">
+
+			<p:fieldset legend="Busqueda" style="margin-top:10px">
+				<h:panelGrid id="busEmp" columns="2">
+
+					<p:commandButton class="buscar" value="Buscar Rol"
+						process="@this busEmp" update="dtEmp"
+						action="#{GestionRolesController.buscar()}"/>
+						
+					<p:inputText id="tfbusEmp" class="form-control"
+						value="#{GestionRolesController.codigo}" placeholder="ingrese Codigo"/>
+				</h:panelGrid>
+			</p:fieldset>
+
+			<p:fieldset legend="Datos del Rol de la Empresa" style="margin-top:10px">
+				<h:panelGrid id="dtEmp" columns="2">
+
+					<p:outputLabel for="tfnomEmp" id="nomEm" value="Nombre" />
+					<p:inputText id="tfnomEmp" class="form-control"
+						value="#{GestionRolesController.nombre}" placeholder="Nombre del rol"/>
+
+					<p:outputLabel for="tfDireccionEmp" id="dirEmpre" value="Descripcion" />
+					<p:inputTextarea id="tfDireccionEmp" class="form-control"
+						value="#{GestionRolesController.descripcion}" placeholder="Descripcion del rol de la empresa"/>
+					
+				</h:panelGrid>
+				
+				<p:commandButton class="registrar" value="Registrar" update=":tablaDatosEmpresa:panelTablaEmp:tablaEmp
+				:tablaDatosEmpresa:dtEmp" action="#{GestionRolesController.registrar()}" style="margin-top:15px"/>
+
+				<p:commandButton class="editar" value="Editar" update=":tablaDatosEmpresa:panelTablaEmp:tablaEmp
+					:tablaDatosEmpresa:dtEmp" action="#{GestionRolesController.editar()}" style="margin-top:15px"/>
+	
+
+			</p:fieldset>
+			
+			<p:accordionPanel id="panelTablaEmp"  style="margin-top:15px">
+				<p:tab title="Roles Registradas">
+					<p:dataTable value="#{GestionRolesController.roles}" id="tablaEmp"
+						var="a" border="1">
+						<p:column>
+							<f:facet name="header">
+							Codigo
+						</f:facet>
+							<p:outputLabel value="#{a.codigo}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+							Nombre
+						</f:facet>
+							<p:outputLabel value="#{a.nombre}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+							Descripcion
+						</f:facet>
+							<p:outputLabel value="#{a.descripcion}" />
+						</p:column>
+						<p:column>
+						<f:facet name="header">
+							Opciones
+						</f:facet>
+							<p:commandButton
+							action="#{GestionRolesController.eliminar(a)}"
+							value="Borrar"
+								process="@this :tablaDatosEmpresa:panelTablaEmp:tablaEmp"
+								update=":tablaDatosEmpresa:panelTablaEmp:tablaEmp" class="eliminar"/>
+								</p:column>
+					</p:dataTable>
+				</p:tab>
+			</p:accordionPanel>
+			
+			</p:tab>	
+			
+			</p:tabView>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

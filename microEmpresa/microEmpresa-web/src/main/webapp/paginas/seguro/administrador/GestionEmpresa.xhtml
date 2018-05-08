@@ -1,0 +1,105 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+	<ui:define name="cuerpo">
+		<h:form prependId="false">
+		
+		<p:tabView id="tablaDatosEmpresa" style="margin-top:100px">
+					<p:tab title="Gestion de Empresas" dynamic="true" cache="true">
+
+			<p:fieldset legend="Busqueda" style="margin-top:10px">
+				<h:panelGrid id="busEmp" columns="2">
+
+					<p:commandButton styleClass="ui-priority-primary" value="Buscar"
+						process="@this busEmp" update="dtEmp"
+						action="#{gestionEmpresaController.buscarEmpresa()}"/>
+						
+					<p:inputText id="tfbusEmp" class="form-control"
+						value="#{gestionEmpresaController.codigo}" placeholder="ingrese Codigo"/>
+				</h:panelGrid>
+			</p:fieldset>
+
+			<p:fieldset legend="Datos Empresa" style="margin-top:10px">
+				<h:panelGrid id="dtEmp" columns="2">
+
+					<p:outputLabel for="tfnomEmp" id="nomEm" value="Nombre" />
+					<p:inputText id="tfnomEmp" class="form-control"
+						value="#{gestionEmpresaController.nombre}" placeholder="Nombre Empresa"/>
+
+
+					<p:outputLabel for="tfTel" id="telEmp" value="Telefono" />
+					<p:inputText id="tfTel" class="form-control"
+						value="#{gestionEmpresaController.telefono}" placeholder="Telefono Empresa"/>
+
+
+					<p:outputLabel for="tfDireccionEmp" id="dirEmpre" value="Direccion" />
+					<p:inputTextarea id="tfDireccionEmp" class="form-control"
+						value="#{gestionEmpresaController.direccion}" placeholder="Direccion Empresa"/>
+
+
+					<p:outputLabel for="tfBasesDatosEmp" id="basesEmp" value="Base de datos" />
+					<h:selectOneMenu id="tfBasesDatosEmp" class="form-control" value="#{gestionEmpresaController.bd}">
+						<f:selectItem itemValue="0" itemLabel="Seleccione..." />
+						<f:selectItem itemValue="1" itemLabel="Oracle" />
+						<f:selectItem itemValue="2" itemLabel="Postgress" />
+					</h:selectOneMenu>
+					
+				</h:panelGrid>
+				
+				<p:commandButton styleClass="ui-priority-primary" value="Registrar" update=":tablaDatosEmpresa:panelTablaEmp:tablaEmp
+				:tablaDatosEmpresa:dtEmp" action="#{gestionEmpresaController.registrarEmpresa()}" style="margin-top:15px"/>
+
+			<p:commandButton styleClass="ui-priority-primary" value="Editar" update=":tablaDatosEmpresa:panelTablaEmp:tablaEmp
+				:tablaDatosEmpresa:dtEmp" action="#{gestionEmpresaController.editarEmpresa()}" style="margin-top:15px"/>
+
+			</p:fieldset>
+			
+			<p:accordionPanel id="panelTablaEmp"  style="margin-top:15px">
+				<p:tab title="Empresas Registradas">
+					<p:dataTable value="#{gestionEmpresaController.listaEmpresas}" id="tablaEmp"
+						var="em" border="1">
+						<p:column>
+							<f:facet name="header">
+							Codigo
+						</f:facet>
+							<p:outputLabel value="#{em.codigo}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+							Nombre
+						</f:facet>
+							<p:outputLabel value="#{em.nombre}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+							telefono
+						</f:facet>
+							<p:outputLabel value="#{em.telefono}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+							Direccion
+						</f:facet>
+							<p:outputLabel value="#{em.direccion}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+							Base de datos
+						</f:facet>
+							<p:outputLabel value="Oracle" rendered="#{em.bd==1}"/>
+							<p:outputLabel value="Postgress" rendered="#{em.bd==2}"/>
+						</p:column>
+					</p:dataTable>
+				</p:tab>
+			</p:accordionPanel>
+			
+			</p:tab>	
+			
+			</p:tabView>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

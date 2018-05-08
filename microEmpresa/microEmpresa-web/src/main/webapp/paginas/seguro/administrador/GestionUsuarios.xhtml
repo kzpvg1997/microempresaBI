@@ -1,0 +1,162 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+	<ui:define name="cuerpo">
+		<h:form prependId="false" id="gestion">
+		
+		<p:tabView id="tablaDatosEmpresa" style="margin-top:100px">
+					<p:tab title="Registro de Usuarios" dynamic="true" cache="true">
+
+			<p:fieldset legend="Busqueda" style="margin-top:10px">
+				<h:panelGrid id="busEmp" columns="2">
+
+					<p:inputText id="tfbusEmpl" class="form-control"
+						value="#{GestionUsuariosController.username}" placeholder="Ingrese username"/>
+						
+					<p:commandButton styleClass="ui-priority-primary" value="Buscar"
+						process="@this busEmp" update="dtEmp" action="#{GestionUsuariosController.buscar()}"/>
+				
+				</h:panelGrid>
+			</p:fieldset>
+
+			<p:fieldset legend="Datos Usuario" style="margin-top:10px">
+				<h:panelGrid id="dtEmp" columns="3">
+
+					<p:outputLabel for="tfRolEmpl" id="rolEmpl" value="Rol" />
+					<h:selectOneMenu id="tfRolEmpl" class="form-control" value="#{GestionUsuariosController.rol}" converter="#{rolConverter}">
+						<f:selectItems  value="#{GestionUsuariosController.roles}" var="rol" itemValue="#{rol}" itemLabel="#{rol.nombre}"/>
+					</h:selectOneMenu>
+					<p:message for="tfRolEmpl"/>
+
+					<p:outputLabel for="tfcedEmple" id="cedcli" value="Cedula" />
+					<p:inputText id="tfcedEmple" class="form-control"
+						value="#{GestionUsuariosController.cedula}" placeholder="Cedula persona"/>
+					<p:message for="tfcedEmple"/>
+						
+					<p:outputLabel for="tfnomEmple" id="nomcli" value="Nombre" />
+					<p:inputText id="tfnomEmple" class="form-control"
+						value="#{GestionUsuariosController.nombre}" placeholder="Nombre persona"/>
+					<p:message for="tfnomEmple"/>
+
+					<p:outputLabel for="tfApellidoEmpl" id="apellCliente" value="Apellido" />
+					<p:inputText id="tfApellidoEmpl" class="form-control"
+						value="#{GestionUsuariosController.apellido}" placeholder="Apellido persona"/>
+					<p:message for="tfApellidoEmpl"/>
+						
+					<p:outputLabel for="tfFechaNacimientoEmpl" id="fechaNacEmpl" value="Fecha nacimiento" />
+					<p:calendar id="tfFechaNacimientoEmpl" class="form-control"
+						value="#{GestionUsuariosController.fechaNacimiento}" pattern="dd/MM/yyyy" showOn="button" placeholder="dd/MM/yyyy"/>
+					<p:message for="tfFechaNacimientoEmpl"/>
+						
+					<p:outputLabel for="tfGeneroEmpl" id="generoEmp" value="Genero" />
+				    <h:selectOneMenu id="tfGeneroEmpl" class="form-control" value="#{GestionUsuariosController.genero}" converter="#{generoConverter}">
+						<f:selectItems  value="#{GestionUsuariosController.generos}" var="gen" itemValue="#{gen}" itemLabel="#{gen.nombre}" />
+					</h:selectOneMenu>
+					<p:message for="tfGeneroEmpl"/>
+					
+					<p:outputLabel for="tfdepEmpl" id="dep" value="Departamento" />
+					<h:selectOneMenu id="tfdepEmpl" class="form-control" value="#{GestionUsuariosController.departamento}" converter="#{departamentoConverter}">
+						<f:selectItems  value="#{GestionUsuariosController.departamentos}" var="d" itemValue="#{d}" itemLabel="#{d.nombre}" />
+						<f:ajax event="change" execute="@this" render="tfMunicipioEmpl" listener="#{GestionUsuariosController.MunicipiosBydepartamento()}"/>
+					</h:selectOneMenu>
+					<p:message for="tfdepEmpl"/>
+						
+					<p:outputLabel for="tfMunicipioEmpl" id="municpEmpl" value="Ciudad/Municipio" />
+					<h:selectOneMenu id="tfMunicipioEmpl" class="form-control" value="#{GestionUsuariosController.municipio}" converter="#{municipioConverter}">
+						<f:selectItems  value="#{GestionUsuariosController.municipios}" var="mun" itemValue="#{mun}" itemLabel="#{mun.nombre}" />
+					</h:selectOneMenu>
+					<p:message for="tfMunicipioEmpl"/>
+
+					<p:outputLabel for="tftelefonoEmpl" id="telEmpl" value="Telefono" />
+					<p:inputText id="tftelefonoEmpl" class="form-control"
+						value="#{GestionUsuariosController.telefono}" placeholder="Telefono persona"/>
+					<p:message for="tftelefonoEmpl"/>
+
+					<p:outputLabel for="tfAreasEmpresaEmpl" id="areasEmpresaEmpl" value="Area de la empresa" />
+					<h:selectOneMenu id="tfAreasEmpresaEmpl" class="form-control" value="#{GestionUsuariosController.areaEmpresa}" converter="#{areaEmpresaConverter}">
+						<f:selectItems  value="#{GestionUsuariosController.areasEmpresa}" var="ar" itemValue="#{ar}" itemLabel="#{ar.nombre}" />
+					</h:selectOneMenu>
+					<p:message for="tfAreasEmpresaEmpl"/>
+					
+					<p:outputLabel for="tfuserEmple" id="username" value="Username" />
+					<p:inputText id="tfuserEmple" class="form-control"
+						value="#{GestionUsuariosController.elusername}" placeholder="Nombre de usuario"/>
+					<p:message for="tfuserEmple"/>
+						
+				</h:panelGrid>
+				
+				<!--<p:commandButton styleClass="ui-priority-primary" value="Registrar" update=":tablaDatosEmpresa:panelTablaEmp:tablaEmp
+				:tablaDatosEmpresa:dtEmp" action="#{GestionUsuariosController.crear()}" style="margin-top:15px"/>-->
+				
+				<p:commandButton styleClass="ui-priority-primary" value="Registrar"
+						process="@this dtEmp" update="tablaDatosEmpresa" action="#{GestionUsuariosController.crear()}"/>
+						
+				<p:commandButton styleClass="ui-priority-primary" value="Editar"
+						process="@this dtEmp" update="tablaDatosEmpresa" action="#{GestionUsuariosController.editar()}"/>
+						
+				<p:commandButton styleClass="ui-priority-primary" value="Eliminar"
+						process="@this dtEmp" update="tablaDatosEmpresa" action="#{GestionUsuariosController.eliminar()}"/>
+						
+			</p:fieldset>
+			
+			<p:accordionPanel id="panelTablaEmp"  style="margin-top:15px">
+				<p:tab title="Usuarios Registrados">
+					<p:dataTable value="#{GestionUsuariosController.usuarios}" id="tablaEmp"
+						var="u" border="1">
+						
+						<p:column>
+							<f:facet name="header">
+							Nombre
+						</f:facet>
+							<p:outputLabel value="#{u.persona.nombre}" />
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">
+							Apellido
+						</f:facet>
+							<p:outputLabel value="#{u.persona.apellido}" />
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">
+							Username
+						</f:facet>
+							<p:outputLabel value="#{u.username}" />
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">
+							Password
+						</f:facet>
+							<p:outputLabel value="#{u.password}" />
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">
+							Area Empresa
+						</f:facet>
+							<p:outputLabel value="#{u.persona.areaEmpresa.nombre}" />
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">
+							Rol
+						</f:facet>
+							<p:outputLabel value="#{u.persona.rol.nombre}" />
+						</p:column>
+												
+					</p:dataTable>
+				</p:tab>
+			</p:accordionPanel>
+			
+			</p:tab>	
+			
+			</p:tabView>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http//xmlns.jcp.org/jsf/passthrough">
+	
+  <h:head>
+  
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>FortNiters BI</title>
+    <meta name="description" content="Free Bootstrap Theme by BootstrapMade.com"/>
+    <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template"/>
+    
+    <link rel="shortcut icon" href="#{request.contextPath}/img/logo2.png" />
+    <link rel="stylesheet" type="text/css" href="#{request.contextPath}/https://fonts.googleapis.com/css?family=Open+Sans|Raleway|Candal"/>
+    <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/style.css"/>
+    
+	
+
+  </h:head>
+  <h:body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+  	<!--banner-->
+  	
+  	<nav class="navbar navbar-default navbar-fixed-top">
+			  <div class="container">
+			  	<div class="col-md-12">
+				    <div class="navbar-header">
+				      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				      </button>
+				      
+				      <a class="navbar-brand" href="#"><img src="https://vignette.wikia.nocookie.net/fortnite/images/6/61/Battle_Royale_logo.png/revision/latest/scale-to-width-down/480?cb=20180313000428" class="img-responsive" style="width: 140px; margin-top: -16px;"/></a>
+
+				    </div>
+				    <div class="collapse navbar-collapse navbar-right" id="myNavbar">
+				      <ul class="nav navbar-nav">
+				        <h:form>
+					        <li class="smenu">
+					        	<a href="#">#{sessionController.usuario.persona.rol.nombre}</a>
+					        	    <ul class="submenu">
+								        <ui:repeat var="pag" value="#{sessionController.accesos}">
+								        	<li><h:commandLink action="#{pag.getUrl()}" value="#{pag.nombreAcceso}" /></li>
+								        </ui:repeat>
+							        </ul>		
+						    </li>	
+							<li>
+							<h:commandLink action="#{sessionController.cerrarSesion()}" value="Cerrar Sesion" rendered="#{sessionController.sesion}"></h:commandLink>
+							</li> 
+							<li><a href="#">#{sessionController.usuario.persona.nombre} #{sessionController.usuario.persona.apellido}</a></li>
+						</h:form>       
+				      </ul>
+				    </div>
+				</div>
+			  </div>
+			</nav>
+  	
+  	<h:panelGroup rendered="#{!sessionControl.sesion}">
+  	
+	<section id="banner" class="banner">
+	
+		<div class="bg-color">
+			
+			<div class="container">
+				<div class="row">
+					<div class="banner-info">
+						<div class="banner-logo text-center">
+							<img src="#{request.contextPath}/img/titulo.png" class="img-responsive"/>
+						</div>
+						<div class="banner-text text-center">
+							<h1 class="white">FORTNITERS BI</h1>
+							<p></p>
+						</div>
+						<div class="overlay-detail text-center">
+			             </div>		
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	</h:panelGroup>
+	<!--/ banner-->
+			<h:form prependId="false">
+
+				<div class="body" align="center">
+
+					<section id="portfolio">
+					
+					<p:growl  sticky="true" autoUpdate="true"  />
+
+						<div class="container">
+
+							<div class="box">
+							<ui:insert name="cuerpo" />
+								
+							</div>
+								
+						</div>
+					</section>
+				</div>
+				
+			</h:form>
+	<!--footer-->
+	<footer id="footer">
+		<div class="top-footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-4 col-sm-4 marb20">
+							<div class="ftr-tle">
+								<h4 class="white no-padding">Sobre nosotros</h4>
+							</div>
+							<div class="info-sec">
+								<p>Praesent convallis tortor et enim laoreet, vel consectetur purus latoque penatibus et dis parturient.</p>
+							</div>
+					</div>
+					<div class="col-md-4 col-sm-4 marb20">
+						<div class="ftr-tle">
+							<h4 class="white no-padding">Enlaces rapidos</h4>
+						</div>
+						<div class="info-sec">
+							<ul class="quick-info">
+								<li><a href="#{request.contextPath}/index.html"><i class="fa fa-circle"></i>Inicio</a></li>
+								<li><a href="#{request.contextPath}/#service"><i class="fa fa-circle"></i>Servicio</a></li>
+								<li><a href="#{request.contextPath}/#contact"><i class="fa fa-circle"></i>Cita</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-md-4 col-sm-4 marb20">
+						<div class="ftr-tle">
+							<h4 class="white no-padding">Siguenos en</h4>
+						</div>
+						<div class="info-sec">
+							<ul class="social-icon">
+								<li class="bglight-blue"><i class="fa fa-facebook"></i></li>
+								<li class="bgred"><i class="fa fa-google-plus"></i></li>
+								<li class="bgdark-blue"><i class="fa fa-linkedin"></i></li>
+								<li class="bglight-blue"><i class="fa fa-twitter"></i></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer-line">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 text-center">
+						© Ingenieria de software 2018
+                        <div class="credits">
+                         
+                        </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!--/ footer-->
+    
+    <script src="#{request.contextPath}/js/jquery.min.js"></script>
+    <script src="#{request.contextPath}/js/jquery.easing.min.js"></script>
+    <script src="#{request.contextPath}/js/bootstrap.min.js"></script>
+    <script src="#{request.contextPath}/js/custom.js"></script>
+    <script src="#{request.contextPath}/contactform/contactform.js"></script>
+    
+  </h:body>
+</html>

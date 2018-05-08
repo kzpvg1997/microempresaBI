@@ -1,0 +1,80 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+	<ui:define name="cuerpo">
+		<h:form prependId="false" id="gestion">
+		
+		<p:tabView id="tablaDatosEmpresa" style="margin-top:100px">
+					<p:tab title="Gestion de los Accesos de los roles" dynamic="true" cache="true">
+
+			<p:fieldset legend="Asignar Accesos a un rol" style="margin-top:10px">
+			
+				<h:panelGrid id="dtEmp" columns="3">
+
+				<h:outputLabel for="rol" id="lrol" value="Rol:" />
+				<h:selectOneMenu id="rol" value="#{GestionAccesosRolController.rol}" converter="#{rolConverter}">
+					<f:selectItems value="#{GestionAccesosRolController.roles}" var="rol" itemValue="#{rol}" itemLabel="#{rol.nombre}"/>
+					<f:ajax event="change" execute="@this" render="panelTablaEmp" listener="#{GestionAccesosRolController.accesosByRol()}"/>
+				</h:selectOneMenu>
+				<p:message for="rol"/>
+
+				<h:outputLabel for="acceso" id="lacceso" value="Acceso:" />
+				<h:selectOneMenu id="acceso" value="#{GestionAccesosRolController.acceso}" converter="#{accesoConverter}">
+					<f:selectItems value="#{GestionAccesosRolController.accesos}" var="acceso" itemValue="#{acceso}" itemLabel="#{acceso.nombreAcceso}"/>
+				</h:selectOneMenu>
+				<p:message for="acceso"/>
+					
+				</h:panelGrid>
+				
+				<p:commandButton styleClass="ui-priority-primary" value="Otorgar permiso"  action="#{GestionAccesosRolController.otorgar()}" style="margin-top:15px" update="panelTablaEmp" process="@this,gestion"/>
+
+
+			</p:fieldset>
+			
+			<p:accordionPanel id="panelTablaEmp"  style="margin-top:15px">
+				<p:tab title="Accesos del rol">
+					<p:dataTable value="#{GestionAccesosRolController.rolAccesos}" id="tabla"
+						var="a" border="1">
+						
+						<p:column>
+							<f:facet name="header">
+							Rol
+						</f:facet>
+							<p:outputLabel value="#{a.rol.nombre}" />
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">
+							Acceso
+						</f:facet>
+							<p:outputLabel value="#{a.acceso.nombreAcceso}" />
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">
+							Codigo acceso
+						</f:facet>
+							<p:outputLabel value="#{a.acceso.codigo}" />
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">
+							Quitar acceso
+						</f:facet>
+							<p:commandButton action="#{GestionAccesosRolController.quitar(a)}" value="eliminar" update="gestion" process="@this" id="btnbuscar"/>
+						</p:column>
+												
+					</p:dataTable>
+				</p:tab>
+			</p:accordionPanel>
+			
+			</p:tab>	
+			
+			</p:tabView>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

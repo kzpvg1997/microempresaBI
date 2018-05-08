@@ -1,0 +1,81 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+	<ui:define name="cuerpo">
+		<h:form prependId="false">
+		
+		<p:tabView id="tablaDatosEmpresa" style="margin-top:100px">
+					<p:tab title="Gestion de los tipo de productos" dynamic="true" cache="true">
+
+			<p:fieldset legend="Busqueda" style="margin-top:10px">
+				<h:panelGrid id="busEmp" columns="2">
+
+					<p:commandButton styleClass="ui-priority-primary" value="Buscar"
+						process="@this busEmp" update="dtEmp"
+						action="#{TipoProductoController.buscar()}"/>
+						
+					<p:inputText id="tfbusEmp" class="form-control"
+						value="#{TipoProductoController.codigo}" placeholder="ingrese Codigo"/>
+				</h:panelGrid>
+			</p:fieldset>
+
+			<p:fieldset legend="Datos del Tipo de Producto" style="margin-top:10px">
+				<h:panelGrid id="dtEmp" columns="2">
+
+					<p:outputLabel for="tfnomEmp" id="nomEm" value="Nombre" />
+					<p:inputText id="tfnomEmp" class="form-control"
+						value="#{TipoProductoController.nombre}" placeholder="Nombre del tipo de producto"/>
+
+					<p:outputLabel for="tfDireccionEmp" id="dirEmpre" value="Descripcion" />
+					<p:inputTextarea id="tfDireccionEmp" class="form-control"
+						value="#{TipoProductoController.descripcion}" placeholder="Descripcion del tipo de producto"/>
+					
+				</h:panelGrid>
+				
+				<p:commandButton styleClass="ui-priority-primary" value="Registrar" update=":tablaDatosEmpresa:panelTablaEmp:tablaEmp
+				:tablaDatosEmpresa:dtEmp" action="#{TipoProductoController.registrar()}" style="margin-top:15px"/>
+
+				<p:commandButton styleClass="ui-priority-primary" value="Editar" update=":tablaDatosEmpresa:panelTablaEmp:tablaEmp
+					:tablaDatosEmpresa:dtEmp" action="#{TipoProductoController.editar()}" style="margin-top:15px"/>
+	
+				<p:commandButton styleClass="ui-priority-primary" value="Eliminar" update=":tablaDatosEmpresa:panelTablaEmp:tablaEmp
+					:tablaDatosEmpresa:dtEmp" action="#{TipoProductoController.eliminar()}" style="margin-top:15px"/>
+
+			</p:fieldset>
+			
+			<p:accordionPanel id="panelTablaEmp"  style="margin-top:15px">
+				<p:tab title="Areas Registradas">
+					<p:dataTable value="#{TipoProductoController.lista}" id="tablaEmp"
+						var="a" border="1">
+						<p:column>
+							<f:facet name="header">
+							Codigo
+						</f:facet>
+							<p:outputLabel value="#{a.codigo}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+							Nombre
+						</f:facet>
+							<p:outputLabel value="#{a.nombre}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+							Descripcion
+						</f:facet>
+							<p:outputLabel value="#{a.descripcion}" />
+						</p:column>
+					</p:dataTable>
+				</p:tab>
+			</p:accordionPanel>
+			
+			</p:tab>	
+			
+			</p:tabView>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
