@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -21,8 +23,13 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="Inventarios")
+@NamedQueries({
+	@NamedQuery(name=Inventario.listar,query="SELECT i FROM Inventario i")
+})
 public class Inventario implements Serializable{
 
+	public static final String listar = "Inventario.listar";
+	
 	@Id
 	@Column(name="codigo")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "INVENTARIO_SEQ")

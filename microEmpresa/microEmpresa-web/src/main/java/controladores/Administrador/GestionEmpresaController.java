@@ -83,11 +83,12 @@ public class GestionEmpresaController implements Serializable{
 		}
 	}
 	
-	public void editarEmpresa(){
+	public String editarEmpresa(){
 		
 		try{
 			if(codigo==0){
 				Messages.addFlashGlobalWarn("Para editar por favor busque la empresa");
+				return null;
 			}else{
 				Empresa em =new Empresa() ;
 				em.setBd(bd);
@@ -98,8 +99,7 @@ public class GestionEmpresaController implements Serializable{
 				Empresa emB = empEjb.buscar(em.getCodigo(), 1);
 				if (emB==null){
 					Messages.addFlashGlobalError("la empresa con codigo: "+codigo+" NO se encuentra registrada");
-					return;
-				}
+				}else{
 				if(nombre.isEmpty()||direccion.isEmpty()||telefono.isEmpty()||bd == 0){
 					Messages.addFlashGlobalWarn("Por favor ingrese toda la informacion");
 				}else{	
@@ -108,7 +108,6 @@ public class GestionEmpresaController implements Serializable{
 					listarEmpresas();
 					Messages.addFlashGlobalInfo("la empresa con codigo: "+codigo+" ha sido editada exitosamente!");
 					if(emB.getBd() != em.getBd()){
-						// Destruimos la sesion
 						
 						/* Guardamos en la auditoria */
 						String accion = "Oracle";
@@ -116,14 +115,20 @@ public class GestionEmpresaController implements Serializable{
 							accion = "Postgress";
 						}
 						auditoria(em.getCodigo(), accion);
+						// Destruimos la sesion
+						return sesion.cerrarSesion();
 					}
+					
 				}
+				}
+				
 			}
 		}catch (NullPointerException ex){
 			Messages.addFlashGlobalWarn("Por favor ingrese todos los datos");
 		}catch (NumberFormatException ex){
 			Messages.addFlashGlobalWarn("Por favor ingrese solo datos numericos en la busqueda");
 		}
+		return null;
 		
 	}
 

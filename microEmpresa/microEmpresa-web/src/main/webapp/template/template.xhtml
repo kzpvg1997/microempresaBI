@@ -14,7 +14,7 @@
     <meta name="description" content="Free Bootstrap Theme by BootstrapMade.com"/>
     <meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template"/>
     
-    <link rel="shortcut icon" href="#{request.contextPath}/img/logo2.png" />
+    <link rel="shortcut icon" href="#{request.contextPath}/img/bg-banner.png" />
     <link rel="stylesheet" type="text/css" href="#{request.contextPath}/https://fonts.googleapis.com/css?family=Open+Sans|Raleway|Candal"/>
     <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/font-awesome.min.css"/>
     <link rel="stylesheet" type="text/css" href="#{request.contextPath}/css/bootstrap.min.css"/>
@@ -53,7 +53,12 @@
 							<li>
 							<h:commandLink action="#{sessionController.cerrarSesion()}" value="Cerrar Sesion" rendered="#{sessionController.sesion}"></h:commandLink>
 							</li> 
-							<li><a href="#">#{sessionController.usuario.persona.nombre} #{sessionController.usuario.persona.apellido}</a></li>
+							<li><a href="#">#{sessionController.usuario.persona.nombre} 
+							#{sessionController.usuario.persona.apellido}</a>
+							 <a href="#" style="color: #F4D03F">#{sessionController.obtenerBD()}</a></li>
+				        	<!-- <li>
+				        	<a href="#">#{sessionController.obtenerBD()}</a>
+							</li> -->
 						</h:form>       
 				      </ul>
 				    </div>

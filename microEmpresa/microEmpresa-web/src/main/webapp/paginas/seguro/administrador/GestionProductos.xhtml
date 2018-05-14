@@ -1,0 +1,122 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+	<ui:define name="cuerpo">
+		<h:form prependId="false" id="gestion">
+		
+		<p:tabView id="tablaDatosEmpresa" style="margin-top:100px">
+			<p:tab title="Gestion de productos" dynamic="true" cache="true" id="tabdata">
+
+			<p:fieldset legend="Busqueda" style="margin-top:10px">
+				<h:panelGrid id="busProd" columns="2">
+
+					<p:commandButton class="buscar" value="Buscar Producto"
+						process="@this busProd" update="dtEmp"
+						action="#{GestionProductosController.buscar()}"/>
+						
+					<p:inputText id="tfbusEmp" class="form-control"
+						value="#{GestionProductosController.codigo}" placeholder="ingrese Codigo"/>
+				</h:panelGrid>
+			</p:fieldset>
+
+			<p:fieldset legend="Datos del Producto" style="margin-top:10px">
+				<h:panelGrid id="dtEmp" columns="2">
+
+					<p:outputLabel for="tfNomProducto" id="nomPro" value="Nombre" />
+					<p:inputText id="tfNomProducto" class="form-control"
+						value="#{GestionProductosController.nombre}" placeholder="Nombre del producto"/>
+
+					<p:outputLabel for="tfDescripcionPro" id="descPro" value="Descripcion" />
+					<p:inputTextarea id="tfDescripcionPro" class="form-control"
+						value="#{GestionProductosController.descripcion}" placeholder="Descripcion del producto"/>
+						
+					<p:outputLabel for="tfDimensionPro" id="dimPro" value="Dimensiones" />
+					<p:inputMask mask="99 cm X 99 cm" id="tfDimensionPro" class="form-control"
+					value="#{GestionProductosController.dimensiones}" placeholder="00cm X 00cm"/>
+					
+					<p:outputLabel for="tfPesoPro" id="pesoPro" value="Peso de producto (gr)" />
+					<p:spinner id="tfPesoPro"  stepFactor="0.25" class="form-control"
+						value="#{GestionProductosController.peso}" placeholder="0000 gr"/>
+						
+					<p:outputLabel for="tfValorPro" id="valorPro" value="Precio" />
+					<p:inputText id="tfValorPro"  class="form-control"
+						value="#{GestionProductosController.valor}" placeholder="Ingrese precio"/>
+						
+					<p:outputLabel for="tfTipos" id="listTiposPro" value="Tipo Producto" />
+					<h:selectOneMenu id="tfTipos" class="form-control" value="#{GestionProductosController.tipoProductoSeleccionado}">
+						<f:selectItem itemValue="0" itemLabel="Seleccione..." />
+						<f:selectItems  value="#{GestionProductosController.listaTipoProducto}"
+							var="tip" itemValue="#{tip.codigo}" itemLabel="#{tip.nombre}" />
+					</h:selectOneMenu>
+					
+				</h:panelGrid>
+				
+				<p:commandButton class="registrar" value="Registrar"
+				 update="tabdata" action="#{GestionProductosController.crear()}" style="margin-top:15px"/>
+
+				<p:commandButton class="editar" value="Editar"
+				update="tabdata" action="#{GestionProductosController.editar()}" style="margin-top:15px"/>
+	
+
+			</p:fieldset>
+			
+			<p:accordionPanel id="panelTablaEmp"  style="margin-top:15px">
+				<p:tab title="Productos Registrados">
+				<div style="overflow: auto; border: 1px solid #ccc; height: 260px">
+					<p:dataTable value="#{GestionProductosController.listaProductos}" id="tablaEmp"
+						var="a" border="1">
+						<p:column>
+							<f:facet name="header">
+							Codigo
+						</f:facet>
+							<p:outputLabel value="#{a.codigo}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+							Nombre
+						</f:facet>
+							<p:outputLabel value="#{a.nombre}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+							Descripcion
+						</f:facet>
+							<p:outputLabel value="#{a.descripcion}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+							Valor
+						</f:facet>
+							<p:outputLabel value="#{a.valor} $ pesos" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+							Tipo
+						</f:facet>
+							<p:outputLabel value="#{a.tipoProducto.nombre}" />
+						</p:column>
+						<p:column>
+						<f:facet name="header">
+							Opciones
+						</f:facet>
+							<p:commandButton
+							action="#{GestionProductosController.eliminar(a)}"
+							value="Borrar"
+								process="@this :tablaDatosEmpresa:panelTablaEmp:tablaEmp"
+								update=":tablaDatosEmpresa:panelTablaEmp:tablaEmp" class="eliminar"/>
+								</p:column>
+					</p:dataTable>
+					</div>
+				</p:tab>
+			</p:accordionPanel>
+			
+			</p:tab>	
+			
+			</p:tabView>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

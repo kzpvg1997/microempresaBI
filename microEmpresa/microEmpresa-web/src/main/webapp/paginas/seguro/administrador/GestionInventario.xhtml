@@ -1,0 +1,76 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+	<ui:define name="cuerpo">
+		<h:form prependId="false">
+		
+		<p:tabView id="datosInventario" style="margin-top:100px">
+					<p:tab title="Gestion de Inventario de la empresa" dynamic="true" cache="true">
+
+
+			<p:fieldset legend="Datos del Inventario" style="margin-top:10px">
+				<h:panelGrid id="dtInv" columns="2">
+
+					<p:outputLabel for="tfLocalizacion" id="localizacionInv" value="Localizacion" />
+					<p:inputTextarea id="tfLocalizacion" class="form-control"
+						value="#{GestionInventarioController.localizacion}" placeholder="Localizacion del inventario"/>
+
+					<p:outputLabel for="tfEmpresas" id="listEmp" value="Empresa" />
+					<h:selectOneMenu id="tfEmpresas" class="form-control" value="#{GestionInventarioController.empresaSeleccionada}">
+						<f:selectItem itemValue="0" itemLabel="Seleccione..." />
+						<f:selectItems  value="#{GestionInventarioController.listaEmpresas}"
+							var="emp" itemValue="#{emp.codigo}" itemLabel="#{emp.nombre}" />
+					</h:selectOneMenu>
+				</h:panelGrid>
+				
+				<p:commandButton class="registrar" value="Registrar" update=":datosInventario:panelTablaInv:tablaÏnv
+				:datosInventario:dtInv" action="#{GestionInventarioController.crear()}" style="margin-top:15px"/>
+	
+
+			</p:fieldset>
+			
+			<p:accordionPanel id="panelTablaInv"  style="margin-top:15px">
+				<p:tab title="Inventarios Registrados">
+					<p:dataTable value="#{GestionInventarioController.listaInventarios}" id="tablaÏnv"
+						var="a" border="1">
+						<p:column>
+							<f:facet name="header">
+							Codigo
+						</f:facet>
+							<p:outputLabel value="#{a.codigo}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+							Localizacion
+						</f:facet>
+							<p:outputLabel value="#{a.localizacion}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+							Empresa
+						</f:facet>
+							<p:outputLabel value="#{a.empresa.nombre}" />
+						</p:column>
+						<p:column>
+						<f:facet name="header">
+							Opciones
+						</f:facet>
+							<p:commandButton
+							action="#{GestionInventarioController.eliminar(a)}"
+							value="Borrar" process="@this :datosInventario:panelTablaInv:tablaÏnv"
+								update=":datosInventario:panelTablaInv:tablaÏnv" class="eliminar"/>
+								</p:column>
+					</p:dataTable>
+				</p:tab>
+			</p:accordionPanel>
+			
+			</p:tab>	
+			
+			</p:tabView>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

@@ -25,8 +25,8 @@
 					<p:message for="tfApellidoEmpl"/>
 						
 					<p:outputLabel for="tfFechaNacimientoEmpl" id="fechaNacEmpl" value="Fecha nacimiento" />
-					<p:calendar id="tfFechaNacimientoEmpl" class="form-control"
-						value="#{GestionUsuariosController.fechaNacimiento}" pattern="dd/MM/yyyy" showOn="button" placeholder="dd/MM/yyyy"/>
+					<p:inputMask mask="99/99/9999" id="tfFechaNacimientoEmpl" class="form-control"
+					value="#{GestionUsuariosController.fechaNacimiento}" placeholder="DD/MM/AAAA"/>
 					<p:message for="tfFechaNacimientoEmpl"/>
 						
 					<p:outputLabel for="tfGeneroEmpl" id="generoEmp" value="Genero" />
@@ -57,13 +57,14 @@
 					<p:inputText id="tfuserEmple" class="form-control"
 						value="#{GestionUsuariosController.elusername}" placeholder="Nombre de usuario"/>
 					<p:message for="tfuserEmple"/>
-						
+					
+					
 				</h:panelGrid>
-				
-				<p:commandButton value="Volver a inicio"  process="@this gestion dtEmp" action="#{GestionUsuariosController.volverAInicio()}" class="login" />
 								
-				<p:commandButton value="Registrarme"  process="@this gestion dtEmp" update="dtEmp" action="#{GestionUsuariosController.registrar()}" class="register"/>
-										
+					<p:commandButton id="btnVolverIni" value="Volver a inicio"  process="@this gestion dtEmp" action="#{GestionUsuariosController.volverAInicio()}" class="login" />
+					
+					<p:commandButton value="Registrarme"  process="@this gestion dtEmp btnVolverIni" update="dtEmp btnVolverIni" action="#{GestionUsuariosController.registrar()}" class="register"/>
+									
 			</p:fieldset>
 		</h:form>
 	</ui:define>

@@ -145,6 +145,16 @@ public class SessionController implements Serializable {
 		auditoriaEJB.crear(auditoria,bd);
 	}
 	
+	public String obtenerBD (){
+	String estado="";
+		if(bd==1){
+			estado = "Conectado a: ORACLE";
+		}else if(bd==2){
+			estado = "Conectado a: POSTGRESS";
+		}
+		return estado;
+	}
+	
 	
 	/**
 	 * @return the username

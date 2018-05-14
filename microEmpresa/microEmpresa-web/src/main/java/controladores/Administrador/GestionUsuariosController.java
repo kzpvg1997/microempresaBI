@@ -1,6 +1,8 @@
 package controladores.Administrador;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -57,22 +59,16 @@ public class GestionUsuariosController implements Serializable{
 	
 	@EJB
 	private ListasEJB listasEJB;
-	
-	@Pattern(regexp="[0-9]*",message="En la cedula Solo numeros")
-	@Length(min=4,max=10,message="Cedula Entre 4 y 10 caracteres")
+
 	private String cedula;
 	
-	@Pattern(regexp="[a-zA-Z ]*",message="Nombre No valido")
-	@Length(min=4,max=50,message="Nombre entre 4 y 50 caracteres")
 	private String nombre;
 	
-	@Pattern(regexp="[a-zA-Z ]*",message="Apellido No valido")
-	@Length(min=4,max=50,message="Apellido entre 4 y 50 caracteres")
 	private String apellido;
 	
 	private Rol rol;
 	
-	private Date fechaNacimiento;
+	private String fechaNacimiento;
 	
 	private Genero genero;
 	
@@ -80,8 +76,6 @@ public class GestionUsuariosController implements Serializable{
 	
 	private Municipio municipio;
 	
-	@Pattern(regexp="[0-9]*",message="Telefono Solo numeros")
-	@Length(min=5,max=20,message="Telefono Entre 5 y 20 caracteres")
 	private String telefono;
 	
 	private AreasEmpresa areaEmpresa;
@@ -112,7 +106,6 @@ public class GestionUsuariosController implements Serializable{
 	
 	private List<Usuario> empleados;
 	
-	@Pattern(regexp="[0-9]*",message="En el salario solo se admiten numeros")
 	private String salario;
 	
 	private Date FechaIngreso;
@@ -174,7 +167,7 @@ public class GestionUsuariosController implements Serializable{
 					cedula = u.getPersona().getCedula();
 					nombre = u.getPersona().getNombre();
 					apellido = u.getPersona().getApellido();
-					fechaNacimiento = u.getPersona().getFechaNacimiento();
+					fechaNacimiento = String.valueOf(u.getPersona().getFechaNacimiento());
 					genero = u.getPersona().getGenero();
 					departamento = u.getPersona().getMunicipio().getDepartamento();
 					municipio = u.getPersona().getMunicipio();
@@ -209,7 +202,7 @@ public class GestionUsuariosController implements Serializable{
 					cedula = u.getPersona().getCedula();
 					nombre = u.getPersona().getNombre();
 					apellido = u.getPersona().getApellido();
-					fechaNacimiento = u.getPersona().getFechaNacimiento();
+					fechaNacimiento = String.valueOf(u.getPersona().getFechaNacimiento());
 					genero = u.getPersona().getGenero();
 					departamento = u.getPersona().getMunicipio().getDepartamento();
 					municipio = u.getPersona().getMunicipio();
@@ -273,6 +266,7 @@ public class GestionUsuariosController implements Serializable{
 		try{
 			if(elusername.isEmpty() || apellido.isEmpty() || cedula.isEmpty() || nombre.isEmpty() || telefono.isEmpty()){
 				Messages.addFlashGlobalInfo("Por favor ingrese toda la informacion");
+				return;
 			}else{
 				Usuario u = new Usuario();
 				u.setEstado(true);
@@ -283,7 +277,10 @@ public class GestionUsuariosController implements Serializable{
 				p.setAreaEmpresa(areaEmpresa);
 				p.setCedula(cedula);
 				p.setFechaIngreso(null);
-				p.setFechaNacimiento(fechaNacimiento);
+				/*Convertimos la fecha que nos esta llegando a tipo Date*/
+				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+				Date fecha=  formato.parse(fechaNacimiento);
+				p.setFechaNacimiento(fecha);
 				p.setGenero(genero);
 				p.setMunicipio(municipio);
 				p.setNombre(nombre);
@@ -318,6 +315,7 @@ public class GestionUsuariosController implements Serializable{
 		try{
 			if(elusername.isEmpty() || apellido.isEmpty() || cedula.isEmpty() || nombre.isEmpty() || telefono.isEmpty()){
 				Messages.addFlashGlobalInfo("Por favor ingrese toda la informacion");
+				return null;
 			}else{
 				Usuario u = new Usuario();
 				u.setEstado(false);
@@ -328,7 +326,10 @@ public class GestionUsuariosController implements Serializable{
 				p.setAreaEmpresa(null);
 				p.setCedula(cedula);
 				p.setFechaIngreso(null);
-				p.setFechaNacimiento(fechaNacimiento);
+				/*Convertimos la fecha que nos esta llegando a tipo Date*/
+				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+				Date fecha=  formato.parse(fechaNacimiento);
+				p.setFechaNacimiento(fecha);
 				p.setGenero(genero);
 				p.setMunicipio(municipio);
 				p.setNombre(nombre);
@@ -377,7 +378,10 @@ public class GestionUsuariosController implements Serializable{
 				p.setAreaEmpresa(areaEmpresa);
 				p.setCedula(cedula);
 				p.setFechaIngreso(null);
-				p.setFechaNacimiento(fechaNacimiento);
+				/*Convertimos la fecha que nos esta llegando a tipo Date*/
+				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+				Date fecha=  formato.parse(fechaNacimiento);
+				p.setFechaNacimiento(fecha);
 				p.setGenero(genero);
 				p.setMunicipio(municipio);
 				p.setNombre(nombre);
@@ -519,14 +523,14 @@ public class GestionUsuariosController implements Serializable{
 	/**
 	 * @return the fechaNacimiento
 	 */
-	public Date getFechaNacimiento() {
+	public String getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 
 	/**
 	 * @param fechaNacimiento the fechaNacimiento to set
 	 */
-	public void setFechaNacimiento(Date fechaNacimiento) {
+	public void setFechaNacimiento(String fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
