@@ -88,5 +88,13 @@ public class Inventario implements Serializable{
 	public void setEmpresa(Empresa empresa) {
 		this.empresa = empresa;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return String.valueOf(codigo);
+	}
 	
 }

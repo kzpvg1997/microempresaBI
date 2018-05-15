@@ -1,5 +1,6 @@
 package controladores.ETL;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -22,7 +23,7 @@ import session.SessionController;
  */
 @ViewScoped
 @Named("extractionETL")
-public class GestionExtractionETL {
+public class GestionExtractionETL implements Serializable{
 	
 	@Inject
 	private SessionController sesion;

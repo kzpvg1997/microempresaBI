@@ -8,12 +8,9 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,7 +24,7 @@ import javax.persistence.TemporalType;
  * 
  */
 @Entity
-@Table(name="Ventas")
+@Table(name="Ventas_DW")
 public class VentaDW implements Serializable{
 
 	/**
@@ -35,8 +32,8 @@ public class VentaDW implements Serializable{
 	 */
 	@Id
 	@Column(name="codigo")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VENTA_SEQ")
-    @SequenceGenerator(sequenceName = "venta_seq", allocationSize = 1, name = "VENTA_SEQ")
+	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VENTA_DW_SEQ")
+   // @SequenceGenerator(sequenceName = "venta_seq", allocationSize = 1, name = "VENTA_DW_SEQ")
 	private int codigo;
 	
 	/**

@@ -84,16 +84,16 @@ public class ProductoEJB {
 		}
 	}
 	
-	public List<Producto> productosXInventario (int CodigoInventario, int bd){
+	public List<InventarioProducto> productosXInventario (int CodigoInventario, int bd){
 		conexion.setBd(bd);
 		List<Object> lista = conexion.listarConParametroInteger(Producto.listarProductosXInventario,CodigoInventario);
-		return (List<Producto>)(Object)lista;
+		return (List<InventarioProducto>)(Object)lista;
 	}
 	
 	public void asignarAInventario(InventarioProducto ip,int bd){
 		conexion.setBd(bd);
 		// Buscamos si existe este producto en el inventario
-		if(buscarInventarioProducto(ip.getProducto().getCodigo(), ip.getInventario().getCodigo(), bd)!=null){
+		if(buscarInventarioProducto(ip.getProducto().getCodigo(), ip.getInventario().getCodigo(), bd)==null){
 			conexion.crear(ip);
 		}else{
 			throw new excepciones.ExcepcionNegocio("El producto: "+ip.getProducto().getNombre()+" ya esta asignado a este inventario");

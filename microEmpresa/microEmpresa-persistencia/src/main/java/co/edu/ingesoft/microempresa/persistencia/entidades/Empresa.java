@@ -26,6 +26,7 @@ import javax.persistence.Table;
 })
 public class Empresa implements Serializable{
 
+	
 	public static final String listarTodas = "Empresa.listar";
 	
 	@Id
@@ -142,5 +143,12 @@ public class Empresa implements Serializable{
 		this.bd = bd;
 	}
 	
-	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return nombre;
+	}
+
 }

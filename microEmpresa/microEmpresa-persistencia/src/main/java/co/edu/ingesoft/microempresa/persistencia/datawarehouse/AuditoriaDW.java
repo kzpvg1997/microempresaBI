@@ -1,17 +1,11 @@
 package co.edu.ingesoft.microempresa.persistencia.datawarehouse;
 
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,7 +18,7 @@ import javax.persistence.TemporalType;
  * 
  */
 @Entity
-@Table(name="Auditoria")
+@Table(name="Auditoria_DW")
 public class AuditoriaDW implements Serializable{
 	
 	/**
@@ -32,8 +26,8 @@ public class AuditoriaDW implements Serializable{
 	 */
 	@Id
 	@Column(name="id")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AUDITORIA_SEQ")
-    @SequenceGenerator(sequenceName = "auditoria_seq", allocationSize = 1, name = "AUDITORIA_SEQ")
+	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AUDITORIA_DW_SEQ")
+   // @SequenceGenerator(sequenceName = "auditoria_seq", allocationSize = 1, name = "AUDITORIA_DW_SEQ")
 	private int id;
 	
 	@Column(name="accion",length=100,nullable=false)

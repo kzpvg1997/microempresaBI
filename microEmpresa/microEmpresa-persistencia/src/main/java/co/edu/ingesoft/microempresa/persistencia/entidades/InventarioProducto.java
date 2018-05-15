@@ -43,7 +43,7 @@ public class InventarioProducto implements Serializable{
 	
 	@Column(name="fecha_ingreso",nullable=false)
 	@Temporal(TemporalType.DATE)
-	private Date fechaNacimiento;
+	private Date fechaIngreso;
 	
 	@Column(name="cantidad",nullable=false)
 	private int cantidad;
@@ -103,18 +103,18 @@ public class InventarioProducto implements Serializable{
 
 
 	/**
-	 * @return the fechaNacimiento
+	 * @return the fechaIngreso
 	 */
-	public Date getFechaNacimiento() {
-		return fechaNacimiento;
+	public Date getFechaIngreso() {
+		return fechaIngreso;
 	}
 
 
 	/**
-	 * @param fechaNacimiento the fechaNacimiento to set
+	 * @param fechaIngreso the fechaIngreso to set
 	 */
-	public void setFechaNacimiento(Date fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;
+	public void setFechaIngreso(Date fechaIngreso) {
+		this.fechaIngreso = fechaIngreso;
 	}
 
 

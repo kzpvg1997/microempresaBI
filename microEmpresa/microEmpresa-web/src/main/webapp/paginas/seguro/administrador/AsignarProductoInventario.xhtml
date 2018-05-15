@@ -14,58 +14,25 @@
 				<h:panelGrid id="busInv" columns="2">
 
 				<h:outputLabel for="inventario" id="idInven" value="Inventario:" />
-				<h:selectOneMenu id="inventario" value="#{GestionAccesosRolController.rol}" converter="#{rolConverter}">
-					<f:selectItems value="#{GestionAccesosRolController.roles}" var="rol" itemValue="#{rol}" itemLabel="#{rol.nombre}"/>
-					<f:ajax event="change" execute="@this" render="panelTablaEmp" listener="#{GestionAccesosRolController.accesosByRol()}"/>
-				</h:selectOneMenu>>
+				<h:selectOneMenu id="inventario" value="#{AsignarProductoController.inventarioSeleccionado}">
+					<f:selectItems value="#{AsignarProductoController.listaInventarios}"
+					 var="inv" itemValue="#{inv.codigo}" itemLabel="#{inv.codigo} de: #{inv.empresa}"/>
+					<f:ajax event="change" execute="@this" render="panelTablaProdXInv"
+					listener="#{AsignarProductoController.productoByInventario()}"/>
+				</h:selectOneMenu>
+				
 				</h:panelGrid>
 			</p:fieldset>
-
-			<p:fieldset legend="Datos del Producto" style="margin-top:10px">
-				<h:panelGrid id="dtEmp" columns="2">
-
-					<p:outputLabel for="tfNomProducto" id="nomPro" value="Nombre" />
-					<p:inputText id="tfNomProducto" class="form-control"
-						value="#{GestionProductosController.nombre}" placeholder="Nombre del producto"/>
-
-					<p:outputLabel for="tfDescripcionPro" id="descPro" value="Descripcion" />
-					<p:inputTextarea id="tfDescripcionPro" class="form-control"
-						value="#{GestionProductosController.descripcion}" placeholder="Descripcion del producto"/>
-						
-					<p:outputLabel for="tfDimensionPro" id="dimPro" value="Dimensiones" />
-					<p:inputMask mask="99 cm X 99 cm" id="tfDimensionPro" class="form-control"
-					value="#{GestionProductosController.dimensiones}" placeholder="00cm X 00cm"/>
-					
-					<p:outputLabel for="tfPesoPro" id="pesoPro" value="Peso de producto (gr)" />
-					<p:spinner id="tfPesoPro"  stepFactor="0.25" class="form-control"
-						value="#{GestionProductosController.peso}" placeholder="0000 gr"/>
-						
-					<p:outputLabel for="tfValorPro" id="valorPro" value="Precio" />
-					<p:inputText id="tfValorPro"  class="form-control"
-						value="#{GestionProductosController.valor}" placeholder="Ingrese precio"/>
-						
-					<p:outputLabel for="tfTipos" id="listTiposPro" value="Tipo Producto" />
-					<h:selectOneMenu id="tfTipos" class="form-control" value="#{GestionProductosController.tipoProductoSeleccionado}">
-						<f:selectItem itemValue="0" itemLabel="Seleccione..." />
-						<f:selectItems  value="#{GestionProductosController.listaTipoProducto}"
-							var="tip" itemValue="#{tip.codigo}" itemLabel="#{tip.nombre}" />
-					</h:selectOneMenu>
-					
-				</h:panelGrid>
-				
-				<p:commandButton class="registrar" value="Registrar"
-				 update="tabdata" action="#{GestionProductosController.crear()}" style="margin-top:15px"/>
-
-				<p:commandButton class="editar" value="Editar"
-				update="tabdata" action="#{GestionProductosController.editar()}" style="margin-top:15px"/>
 	
 
-			</p:fieldset>
+			<p:fieldset legend="Seccion de Asignacion" style="margin-top:10px">
+				<h:panelGrid id="AsignarProd" columns="2">
+		
 			
 			<p:accordionPanel id="panelTablaEmp"  style="margin-top:15px">
 				<p:tab title="Productos Registrados">
 				<div style="overflow: auto; border: 1px solid #ccc; height: 260px">
-					<p:dataTable value="#{GestionProductosController.listaProductos}" id="tablaEmp"
+					<p:dataTable value="#{AsignarProductoController.listaProductos}" id="tablaEmp"
 						var="a" border="1">
 						<p:column>
 							<f:facet name="header">
@@ -81,12 +48,6 @@
 						</p:column>
 						<p:column>
 							<f:facet name="header">
-							Descripcion
-						</f:facet>
-							<p:outputLabel value="#{a.descripcion}" />
-						</p:column>
-						<p:column>
-							<f:facet name="header">
 							Valor
 						</f:facet>
 							<p:outputLabel value="#{a.valor} $ pesos" />
@@ -98,20 +59,75 @@
 							<p:outputLabel value="#{a.tipoProducto.nombre}" />
 						</p:column>
 						<p:column>
+							<f:facet name="header">
+							Ingrese Cantidad
+						</f:facet>
+							<p:spinner id="tfCant"  stepFactor="5" class="form-control"
+						value="#{AsignarProductoController.cantidad}" placeholder="Ingrese"/>
+						</p:column>
+						<p:column>
 						<f:facet name="header">
 							Opciones
 						</f:facet>
 							<p:commandButton
-							action="#{GestionProductosController.eliminar(a)}"
-							value="Borrar"
-								process="@this :tablaDatosEmpresa:panelTablaEmp:tablaEmp"
-								update=":tablaDatosEmpresa:panelTablaEmp:tablaEmp" class="eliminar"/>
+							action="#{AsignarProductoController.asignarProducto(a)}"
+							value="Asignar"
+								process="@this tablaDatosEmpresa"
+								update="tablaDatosEmpresa" class="registrar"/>
 								</p:column>
 					</p:dataTable>
 					</div>
 				</p:tab>
 			</p:accordionPanel>
 			
+			<!-- 2do panel (( TABLA DE PRODUCTOS POR INVENTARIO )) -->
+			
+			<p:accordionPanel id="panelTablaProdXInv"  style="margin-top:15px">
+				<p:tab title="Productos del Inventario">
+				<div style="overflow: auto; border: 1px solid #ccc; height: 260px">
+					<p:dataTable value="#{AsignarProductoController.productosXInventarios}" id="tablaProdXInv"
+						var="pi" border="1">
+						<p:column>
+							<f:facet name="header">
+							Codigo
+						</f:facet>
+							<p:outputLabel value="#{pi.producto.codigo}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+							Nombre
+						</f:facet>
+							<p:outputLabel value="#{pi.producto.nombre}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+							Valor
+						</f:facet>
+							<p:outputLabel value="#{pi.producto.valor} $ pesos" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+							 Cantidad
+						</f:facet>
+							<p:outputLabel value="#{pi.cantidad}" />
+						</p:column>
+						<p:column>
+						<f:facet name="header">
+							Opciones
+						</f:facet>
+							<p:commandButton
+							action="#{AsignarProductoController.quitarProducto(pi.producto)}"
+							value="Quitar"
+								process="@this tablaDatosEmpresa"
+								update="tablaDatosEmpresa" class="eliminar"/>
+								</p:column>
+					</p:dataTable>
+					</div>
+				</p:tab>
+			</p:accordionPanel>
+			
+			</h:panelGrid>
+			</p:fieldset>
 			</p:tab>	
 			
 			</p:tabView>
