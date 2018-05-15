@@ -1,4 +1,4 @@
-package co.edu.ingesoft.microempresa.persistencia.entidades;
+package co.edu.ingesoft.microempresa.persistencia.datawarehouse;
 
 import java.io.Serializable;
 import java.sql.Time;
@@ -17,22 +17,19 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
+ * TABLA DE HECHO AUDITORIA
+ * Auditoria Data WereHouse
  * 
- * @author Carlos Martinez
- * Esta entidad nos almacenara toda la informacion de la auditoria de cada una de las tablas
- * Usuarios, Roles, Areas Empresa, Conexion, Recursos Humanos, Ventas, Clientes
+ * Reglas de Negocio:
+ * 
  */
 @Entity
 @Table(name="Auditoria")
-@NamedQueries({
-	@NamedQuery(name=Auditoria.ByTabla,query="SELECT a FROM Auditoria a WHERE a.tabla=?1"),
-	@NamedQuery(name=Auditoria.todo,query="SELECT a FROM Auditoria a")
-})
-public class Auditoria implements Serializable{
+public class AuditoriaDW implements Serializable{
 	
-	public static final String ByTabla = "Auditoria.ByTabla";
-	public static final String todo = "Auditoria.todo";
-	
+	/**
+	 * Por optimizacion, el id es auto incrementable y de valor numerico
+	 */
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AUDITORIA_SEQ")
@@ -62,7 +59,7 @@ public class Auditoria implements Serializable{
 	/**
 	 * 
 	 */
-	public Auditoria() {
+	public AuditoriaDW() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

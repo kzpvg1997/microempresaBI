@@ -1,0 +1,125 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+	<ui:define name="cuerpo">
+		<h:form prependId="false" id="gestion">
+			<p:tabView id="tablaContent">
+			<p:tab title="Resultados de la Extraccion" dynamic="true" cache="true">			
+				<p:accordionPanel id="panelTablaEmp" >
+				
+					<p:tab title="Registros de Auditoria">
+						<p:dataTable value="#{extractionETL.auditorias}" id="tabla"
+							var="a" border="1">
+							
+							<p:column>
+								<f:facet name="header">
+								Id
+							</f:facet>
+								<p:outputLabel value="#{a.id}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								Accion
+							</f:facet>
+								<p:outputLabel value="#{a.accion}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								Tabla
+							</f:facet>
+								<p:outputLabel value="#{a.tabla}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								Registro
+							</f:facet>
+								<p:outputLabel value="#{a.registro}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								Origen
+							</f:facet>
+								<p:outputLabel value="#{a.origen}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								Navegador
+							</f:facet>
+								<p:outputLabel value="#{a.navegador}" />
+							</p:column>
+
+							<p:column>
+								<f:facet name="header">
+								Fecha
+							</f:facet>
+								<p:outputLabel value="#{a.fecha}" />
+							</p:column>
+													
+						</p:dataTable>
+					</p:tab>
+					
+					
+					<p:tab title="Registros de Ventas">
+						<p:dataTable value="#{extractionETL.ventas}" id="tabla2"
+							var="v" border="1">
+							
+							<p:column>
+								<f:facet name="header">
+								codigo
+							</f:facet>
+								<p:outputLabel value="#{v.codigo}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								fecha_venta
+							</f:facet>
+								<p:outputLabel value="#{v.fachaVenta}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								valorTotal
+							</f:facet>
+								<p:outputLabel value="#{v.valorTotal}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								empresa
+							</f:facet>
+								<p:outputLabel value="#{v.empresa.codigo}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								personaEmpleado
+							</f:facet>
+								<p:outputLabel value="#{v.personaEmpleado.codigo}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								personaCliente
+							</f:facet>
+								<p:outputLabel value="#{v.personaCliente.codigo}" />
+							</p:column>
+													
+						</p:dataTable>
+					</p:tab>
+					
+				</p:accordionPanel>
+				</p:tab>
+			</p:tabView>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

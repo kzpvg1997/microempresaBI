@@ -1,7 +1,7 @@
 /**
  * 
  */
-package co.edu.ingesoft.microempresa.persistencia.entidades;
+package co.edu.ingesoft.microempresa.persistencia.datawarehouse;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -13,52 +13,60 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * @author TOSHIBAP55W
- *
+ * TABLA DE HECHO VENTAS
+ * Venta Data WereHouse
+ * 
+ * Reglas de Negocio:
+ * 1. se elimina la relacion a empresa, ya que pues hay solo 1 empresa en el sistema.
+ * 
  */
 @Entity
 @Table(name="Ventas")
-@NamedQueries({
-	@NamedQuery(name=Venta.todo,query="SELECT v FROM Venta v")
-})
-public class Venta implements Serializable{
+public class VentaDW implements Serializable{
 
-	public static final String todo = "Venta.todo";
-	
+	/**
+	 * Por optimizacion, el id es auto incrementable y de valor numerico
+	 */
 	@Id
 	@Column(name="codigo")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "VENTA_SEQ")
     @SequenceGenerator(sequenceName = "venta_seq", allocationSize = 1, name = "VENTA_SEQ")
 	private int codigo;
 	
+	/**
+	 * Fecha en que se realizo la venta
+	 */
 	@Column(name="fecha_venta",nullable=false)
 	@Temporal(TemporalType.DATE)
 	private Date fachaVenta;
 	
+	/**
+	 * Valor total de la venta/compra del cliente
+	 */
 	@Column(name="valor_total")
 	private double valorTotal;
 	
-	@ManyToOne
-	@JoinColumn(name="empresa",nullable=false)
-	private Empresa empresa;
-	
+	/**
+	 * El empleado que realizo la venta
+	 */
 	@ManyToOne
 	@JoinColumn(name="empleado",nullable=false)
-	private Persona personaEmpleado;
+	private PersonaDW personaEmpleado;
 	
+	/**
+	 * El cliente que ralizo la compra
+	 */
 	@ManyToOne
 	@JoinColumn(name="cliente",nullable=false)
-	private Persona personaCliente;
+	private PersonaDW personaCliente;
 	
-	public Venta(){
+	public VentaDW(){
 		
 	}
 
@@ -105,44 +113,30 @@ public class Venta implements Serializable{
 	}
 
 	/**
-	 * @return the empresa
-	 */
-	public Empresa getEmpresa() {
-		return empresa;
-	}
-
-	/**
-	 * @param empresa the empresa to set
-	 */
-	public void setEmpresa(Empresa empresa) {
-		this.empresa = empresa;
-	}
-
-	/**
 	 * @return the personaEmpleado
 	 */
-	public Persona getPersonaEmpleado() {
+	public PersonaDW getPersonaEmpleado() {
 		return personaEmpleado;
 	}
 
 	/**
 	 * @param personaEmpleado the personaEmpleado to set
 	 */
-	public void setPersonaEmpleado(Persona personaEmpleado) {
+	public void setPersonaEmpleado(PersonaDW personaEmpleado) {
 		this.personaEmpleado = personaEmpleado;
 	}
 
 	/**
 	 * @return the personaCliente
 	 */
-	public Persona getPersonaCliente() {
+	public PersonaDW getPersonaCliente() {
 		return personaCliente;
 	}
 
 	/**
 	 * @param personaCliente the personaCliente to set
 	 */
-	public void setPersonaCliente(Persona personaCliente) {
+	public void setPersonaCliente(PersonaDW personaCliente) {
 		this.personaCliente = personaCliente;
 	}
 	

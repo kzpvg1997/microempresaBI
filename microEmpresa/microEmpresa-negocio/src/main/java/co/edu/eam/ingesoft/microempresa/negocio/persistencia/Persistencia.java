@@ -207,7 +207,6 @@ public class Persistencia  implements Serializable{
 	 * @return lista de los objetos encontrados
 	 */
 	public List<Object> listarCon2BasesDatos(String sql){
-		try{
 			Query q = emO.createNamedQuery(sql);
 			Query p = emP.createNamedQuery(sql);
 			List<Object> lista = new ArrayList<Object>(q.getResultList());
@@ -216,9 +215,6 @@ public class Persistencia  implements Serializable{
 			}else{
 				throw new excepciones.ExcepcionFuncional("No se pudo unir los dos listados de las bases de datos");
 			}
-		}catch (ExcepcionFuncional ex){
-			throw new excepciones.ExcepcionFuncional(ex.getMessage());
-		}
 	}
 	
 
