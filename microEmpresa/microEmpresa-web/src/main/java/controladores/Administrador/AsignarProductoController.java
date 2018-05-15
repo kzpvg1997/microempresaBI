@@ -74,17 +74,11 @@ public class AsignarProductoController implements Serializable{
 	
 	public void asignarProducto(Producto p){
 		try{
-		if(cantidad==0){
-			Messages.addFlashGlobalWarn("Por favor Ingrese la cantidad que desea agregar");
-		}else{
 		InventarioProducto ip = productoEJB.buscarInventarioProducto(p.getCodigo(), inventarioSeleccionado, sesion.getBd());
 		if(ip==null){
 			
-			Inventario i = inventarioEJB.buscar(inventarioSeleccionado, sesion.getBd());
 			InventarioProducto inv = new InventarioProducto();
 			inv.setCantidad(cantidad);
-			inv.setInventario(i);
-			inv.setProducto(p);
 			Date d = new Date();
 			inv.setFechaIngreso(d);
 			inv.setPersonaEmpleado(sesion.getUsuario().getPersona());
@@ -95,7 +89,6 @@ public class AsignarProductoController implements Serializable{
 			
 		}else{
 			Messages.addFlashGlobalError("Este producto ya se encuentra registrado en el inventario");
-		}
 		}
 		} catch (ExcepcionNegocio e) {
 			Messages.addGlobalError(e.getMessage());

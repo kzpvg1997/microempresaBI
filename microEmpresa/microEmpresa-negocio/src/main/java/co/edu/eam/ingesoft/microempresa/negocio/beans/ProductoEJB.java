@@ -27,7 +27,8 @@ public class ProductoEJB {
 	@EJB
 	private Persistencia conexion;
 	
-	
+	@EJB
+	private InventarioEJB inventarioEJB;
 	
 	public void crear(Producto pro, int bd){
 		conexion.setBd(bd);
@@ -92,11 +93,22 @@ public class ProductoEJB {
 	
 	public void asignarAInventario(InventarioProducto ip,int bd){
 		conexion.setBd(bd);
+		//Buscamos el producto		
+		Producto pro = buscar(ip.getProducto().getCodigo(), bd);
+		if(pro!=null){
+			//Buscamos el inventario
+			Inventario inv = inventarioEJB.buscar(ip.getInventario().getCodigo(), bd);
+			if(inv!=null){
 		// Buscamos si existe este producto en el inventario
-		if(buscarInventarioProducto(ip.getProducto().getCodigo(), ip.getInventario().getCodigo(), bd)==null){
+				InventarioProducto ip2 = buscarInventarioProducto(ip.getProducto().getCodigo(), ip.getInventario().getCodigo(), bd);
+		if(ip2==null){
+			ip.setProducto(pro);
+			ip.setInventario(inv);
 			conexion.crear(ip);
 		}else{
 			throw new excepciones.ExcepcionNegocio("El producto: "+ip.getProducto().getNombre()+" ya esta asignado a este inventario");
+		}
+		}
 		}
 	}
 	
