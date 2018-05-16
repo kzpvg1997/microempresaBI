@@ -33,7 +33,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="Personas_DW")
-public class PersonaDW implements  Serializable{
+public class ClienteDW implements  Serializable{
 	
 	/**
 	 * Por optimizacion, el id es auto incrementable y de valor numerico
@@ -71,7 +71,7 @@ public class PersonaDW implements  Serializable{
 	private String areaEmpresa;
 	
 	
-	public PersonaDW (){
+	public ClienteDW (){
 		
 	}
 

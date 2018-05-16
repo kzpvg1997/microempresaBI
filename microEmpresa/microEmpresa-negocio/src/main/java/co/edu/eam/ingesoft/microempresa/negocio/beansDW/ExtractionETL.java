@@ -41,8 +41,6 @@ public class ExtractionETL {
 	 * @return lista de registros
 	 */
 	public List<Object> extraerAll(String tabla){
-		System.out.println("-------------------------SIZEEEE-------------------");
-		System.out.println(extraer(2, tabla).size());
 		return extraer(2, tabla);
 	//	List<Object> lista = new ArrayList<Object>(extraer(2, tabla)); 342 (1) -- 
 //		if(lista.addAll(extraer(2, tabla))){

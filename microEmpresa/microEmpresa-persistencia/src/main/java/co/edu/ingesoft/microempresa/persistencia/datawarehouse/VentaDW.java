@@ -54,14 +54,14 @@ public class VentaDW implements Serializable{
 	 */
 	@ManyToOne
 	@JoinColumn(name="empleado",nullable=false)
-	private PersonaDW personaEmpleado;
+	private EmpleadoDW personaEmpleado;
 	
 	/**
 	 * El cliente que ralizo la compra
 	 */
 	@ManyToOne
 	@JoinColumn(name="cliente",nullable=false)
-	private PersonaDW personaCliente;
+	private ClienteDW personaCliente;
 	
 	public VentaDW(){
 		
@@ -112,30 +112,29 @@ public class VentaDW implements Serializable{
 	/**
 	 * @return the personaEmpleado
 	 */
-	public PersonaDW getPersonaEmpleado() {
+	public EmpleadoDW getPersonaEmpleado() {
 		return personaEmpleado;
 	}
 
 	/**
 	 * @param personaEmpleado the personaEmpleado to set
 	 */
-	public void setPersonaEmpleado(PersonaDW personaEmpleado) {
+	public void setPersonaEmpleado(EmpleadoDW personaEmpleado) {
 		this.personaEmpleado = personaEmpleado;
 	}
 
 	/**
 	 * @return the personaCliente
 	 */
-	public PersonaDW getPersonaCliente() {
+	public ClienteDW getPersonaCliente() {
 		return personaCliente;
 	}
 
 	/**
 	 * @param personaCliente the personaCliente to set
 	 */
-	public void setPersonaCliente(PersonaDW personaCliente) {
+	public void setPersonaCliente(ClienteDW personaCliente) {
 		this.personaCliente = personaCliente;
 	}
-	
-	
+
 }

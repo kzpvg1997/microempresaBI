@@ -57,6 +57,10 @@
 
 			</p:fieldset>
 			
+			<h:panelGrid columns="1">
+				<p:commandButton id="btregis"  ajax="false" value="Iniciar proceso ETL"  action="/paginas/seguro/etl/Extraction.xhtml?faces-redirect=true" class="register"/>
+			</h:panelGrid>
+			
 			<p:accordionPanel id="panelTablaEmp"  style="margin-top:15px">
 				<p:tab title="Empresas Registradas">
 					<p:dataTable value="#{gestionEmpresaController.listaEmpresas}" id="tablaEmp"

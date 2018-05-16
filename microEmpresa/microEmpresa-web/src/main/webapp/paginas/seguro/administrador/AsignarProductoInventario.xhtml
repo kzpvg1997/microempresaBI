@@ -33,47 +33,45 @@
 				<p:tab title="Productos Registrados">
 				<div style="overflow: auto; border: 1px solid #ccc; height: 260px">
 					<p:dataTable value="#{AsignarProductoController.listaProductos}" id="tablaEmp"
-						var="a" border="1">
+						var="p" border="1" binding="#{AsignarProductoController.tabla}">
 						<p:column>
 							<f:facet name="header">
 							Codigo
 						</f:facet>
-							<p:outputLabel value="#{a.codigo}" />
+							<p:outputLabel value="#{p.codigo}" />
 						</p:column>
 						<p:column>
 							<f:facet name="header">
 							Nombre
 						</f:facet>
-							<p:outputLabel value="#{a.nombre}" />
+							<p:outputLabel value="#{p.nombre}" />
 						</p:column>
 						<p:column>
 							<f:facet name="header">
 							Valor
 						</f:facet>
-							<p:outputLabel value="#{a.valor} $ pesos" />
+							<p:outputLabel value="#{p.valor} $ pesos" />
 						</p:column>
 						<p:column>
 							<f:facet name="header">
 							Tipo
 						</f:facet>
-							<p:outputLabel value="#{a.tipoProducto.nombre}" />
+							<p:outputLabel value="#{p.tipoProducto.nombre}" />
 						</p:column>
-						<p:column>
+						<p:column id="cant">
 							<f:facet name="header">
 							Ingrese Cantidad
 						</f:facet>
-							<p:spinner id="tfCant"  stepFactor="5" class="form-control"
-						value="#{AsignarProductoController.cantidad}" placeholder="Ingrese"/>
+							<p:spinner name="cantidad" id="tfCant"  stepFactor="5" class="form-control" 
+							value="#{AsignarProductoController.cantidad}" placeholder="Ingrese"/>
 						</p:column>
 						<p:column>
 						<f:facet name="header">
 							Opciones
 						</f:facet>
 							<p:commandButton
-							action="#{AsignarProductoController.asignarProducto(a)}"
-							value="Asignar"
-								process="@this tablaDatosEmpresa"
-								update="tablaDatosEmpresa" class="registrar"/>
+							action="#{AsignarProductoController.asignarProducto(p)}"
+							value="Asignar"  process="@this, tfCant"  update="tablaDatosEmpresa" class="registrar"/>
 								</p:column>
 					</p:dataTable>
 					</div>

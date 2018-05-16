@@ -35,8 +35,6 @@ public class GestionExtractionETL implements Serializable{
 	
 	List<Venta> ventas;
 	
-	List<Persona> personas;
-	
 	@PostConstruct
 	public void inicializar(){
 		listar();
@@ -49,7 +47,6 @@ public class GestionExtractionETL implements Serializable{
 		try{
 			auditorias = (List<Auditoria>)(Object)extractionETL.extraerAll(Auditoria.todo);
 			ventas = (List<Venta>)(Object)extractionETL.extraerAll(Venta.todo);
-			personas = (List<Persona>)(Object)extractionETL.extraerAll(Persona.listarTodas);
 		}catch (excepciones.ExcepcionFuncional e) {
 			Messages.addFlashGlobalWarn(e.getMessage());
 		}
@@ -69,14 +66,6 @@ public class GestionExtractionETL implements Serializable{
 
 	public void setVentas(List<Venta> ventas) {
 		this.ventas = ventas;
-	}
-
-	public List<Persona> getPersonas() {
-		return personas;
-	}
-
-	public void setPersonas(List<Persona> personas) {
-		this.personas = personas;
 	}
 	
 }

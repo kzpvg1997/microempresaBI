@@ -14,6 +14,7 @@ import javax.inject.Named;
 
 import org.omnifaces.cdi.ViewScoped;
 import org.omnifaces.util.Messages;
+import org.primefaces.component.api.UIData;
 
 import co.edu.eam.ingesoft.microempresa.negocio.beans.AuditoriaEJB;
 import co.edu.eam.ingesoft.microempresa.negocio.beans.InventarioEJB;
@@ -57,9 +58,12 @@ public class AsignarProductoController implements Serializable{
 	
 	private List<InventarioProducto> productosXInventarios;
 	
+	
 	private int inventarioSeleccionado;
 	
 	private int productoSeleccionado;
+	
+	private UIData tabla;
 	
 	@PostConstruct
 	public void inicializar() {
@@ -67,29 +71,42 @@ public class AsignarProductoController implements Serializable{
 	}
 	
 	public void listarTodo(){
+		try{
 		listaInventarios = inventarioEJB.listar(sesion.getBd());
 		listaProductos = productoEJB.listar(sesion.getBd());
-		productosXInventarios=productoEJB.productosXInventario(inventarioSeleccionado, sesion.getBd());
+		productosXInventarios=productoEJB.productosXInventario(listaInventarios.get(0).getCodigo(), sesion.getBd());
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 	
 	public void asignarProducto(Producto p){
+		Messages.addFlashGlobalInfo(""+tabla.getRowIndex());
 		try{
-		InventarioProducto ip = productoEJB.buscarInventarioProducto(p.getCodigo(), inventarioSeleccionado, sesion.getBd());
-		if(ip==null){
-			
-			InventarioProducto inv = new InventarioProducto();
-			inv.setCantidad(cantidad);
-			Date d = new Date();
-			inv.setFechaIngreso(d);
-			inv.setPersonaEmpleado(sesion.getUsuario().getPersona());
-			productoEJB.asignarAInventario(inv, sesion.getBd());
-			Messages.addFlashGlobalInfo("El producto:"+inv.getProducto().getNombre()+" Se ha agregado correctamente");
-			listarTodo();
-			productoByInventario();
-			
-		}else{
-			Messages.addFlashGlobalError("Este producto ya se encuentra registrado en el inventario");
-		}
+			if(cantidad > 0){
+				InventarioProducto ip = productoEJB.buscarInventarioProducto(p.getCodigo(), inventarioSeleccionado, sesion.getBd());
+				if(ip==null){
+					Inventario i = inventarioEJB.buscar(inventarioSeleccionado, sesion.getBd());
+					InventarioProducto inv = new InventarioProducto();
+					inv.setInventario(i);
+					inv.setProducto(p);
+					System.out.println("---------------- valor cantidad --------------");
+					System.out.println("----------------(((( "+cantidad+" ))))--------------");
+					inv.setCantidad(cantidad);
+					Date d = new Date();
+					inv.setFechaIngreso(d);
+					inv.setPersonaEmpleado(sesion.getUsuario().getPersona());
+					productoEJB.asignarAInventario(inv, sesion.getBd());
+					Messages.addFlashGlobalInfo("El producto:"+inv.getProducto().getNombre()+" Se ha agregado correctamente");
+					listarTodo();
+					productoByInventario();
+					
+				}else{
+					Messages.addFlashGlobalError("Este producto ya se encuentra registrado en el inventario");
+				}
+			}else{
+				Messages.addFlashGlobalInfo("Por favor, ingrese una cantidad");
+			}
 		} catch (ExcepcionNegocio e) {
 			Messages.addGlobalError(e.getMessage());
 		} catch (Exception ex) {
@@ -247,6 +264,19 @@ public class AsignarProductoController implements Serializable{
 		this.productosXInventarios = productosXInventarios;
 	}
 
+	/**
+	 * @return the tabla
+	 */
+	public UIData getTabla() {
+		return tabla;
+	}
+
+	/**
+	 * @param tabla the tabla to set
+	 */
+	public void setTabla(UIData tabla) {
+		this.tabla = tabla;
+	}
 	
 	
 	

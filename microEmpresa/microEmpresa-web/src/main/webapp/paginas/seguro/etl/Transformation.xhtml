@@ -7,11 +7,11 @@
 	<ui:define name="cuerpo">
 		<h:form prependId="false" id="gestion">
 			<p:tabView id="tablaContent">
-			<p:tab title="ETL Proceso 1: Extraccion" dynamic="true" cache="true">			
+			<p:tab title="ETL Proceso 2: Transformation" dynamic="true" cache="true">			
 				<p:accordionPanel id="panelTablaEmp" >
 				
-					<p:tab title="Registros de Auditoria">
-						<p:dataTable value="#{extractionETL.auditorias}" id="tabla"
+					<p:tab title="Auditoria">
+						<p:dataTable value="#{transformationETL.auditoriasDW}" id="tabla"
 							var="a" border="1">
 							
 							<p:column>
@@ -67,8 +67,8 @@
 					</p:tab>
 					
 					
-					<p:tab title="Registros de Ventas">
-						<p:dataTable value="#{extractionETL.ventas}" id="tabla2"
+					<p:tab title="Ventas">
+						<p:dataTable value="#{transformationETL.ventasDW}" id="tabla2"
 							var="v" border="1">
 							
 							<p:column>
@@ -116,8 +116,8 @@
 						</p:dataTable>
 					</p:tab>
 					
-					<p:tab title="Registros de clientes">
-						<p:dataTable value="#{extractionETL.ventas}" id="tabla3"
+					<p:tab title="Clientes">
+						<p:dataTable value="#{transformationETL.ventasDW}" id="tabla3"
 							var="v" border="1">
 							
 							<p:column>
@@ -132,27 +132,6 @@
 								cedula
 							    </f:facet>
 								<p:outputLabel value="#{v.personaCliente.cedula}" />
-							</p:column>
-							
-							<p:column>
-								<f:facet name="header">
-								nombre
-							    </f:facet>
-								<p:outputLabel value="#{v.personaCliente.nombre}" />
-							</p:column>
-							
-							<p:column>
-								<f:facet name="header">
-								apellido
-							    </f:facet>
-								<p:outputLabel value="#{v.personaCliente.apellido}" />
-							</p:column>
-							
-							<p:column>
-								<f:facet name="header">
-								telefono
-							    </f:facet>
-								<p:outputLabel value="#{v.personaCliente.telefono}" />
 							</p:column>
 							
 							<p:column>
@@ -187,28 +166,28 @@
 								<f:facet name="header">
 								rol
 							    </f:facet>
-								<p:outputLabel value="#{v.personaCliente.rol.nombre}" />
+								<p:outputLabel value="#{v.personaCliente.rol}" />
 							</p:column>
 							
 							<p:column>
 								<f:facet name="header">
 								municipio
 							    </f:facet>
-								<p:outputLabel value="#{v.personaCliente.municipio.nombre}" />
+								<p:outputLabel value="#{v.personaCliente.municipio}" />
 							</p:column>
 							
 							<p:column>
 								<f:facet name="header">
 								area empresa
 							    </f:facet>
-								<p:outputLabel value="#{v.personaCliente.areaEmpresa.nombre}" />
+								<p:outputLabel value="#{v.personaCliente.areaEmpresa}" />
 							</p:column>
 													
 						</p:dataTable>
 					</p:tab>
 					
-					<p:tab title="Registros de empleados">
-						<p:dataTable value="#{extractionETL.ventas}" id="tabla4"
+					<p:tab title="Émpleados">
+						<p:dataTable value="#{transformationETL.ventasDW}" id="tabla4"
 							var="v" border="1">
 							
 							<p:column>
@@ -227,30 +206,9 @@
 							
 							<p:column>
 								<f:facet name="header">
-								nombre
-							    </f:facet>
-								<p:outputLabel value="#{v.personaEmpleado.nombre}" />
-							</p:column>
-							
-							<p:column>
-								<f:facet name="header">
-								apellido
-							    </f:facet>
-								<p:outputLabel value="#{v.personaEmpleado.apellido}" />
-							</p:column>
-							
-							<p:column>
-								<f:facet name="header">
-								telefono
-							    </f:facet>
-								<p:outputLabel value="#{v.personaEmpleado.telefono}" />
-							</p:column>
-							
-							<p:column>
-								<f:facet name="header">
 								genero
 							    </f:facet>
-								<p:outputLabel value="#{v.personaEmpleado.genero.nombre}" />
+								<p:outputLabel value="#{v.personaEmpleado.genero}" />
 							</p:column>
 							
 							<p:column>
@@ -278,21 +236,21 @@
 								<f:facet name="header">
 								rol
 							    </f:facet>
-								<p:outputLabel value="#{v.personaEmpleado.rol.nombre}" />
+								<p:outputLabel value="#{v.personaEmpleado.rol}" />
 							</p:column>
 							
 							<p:column>
 								<f:facet name="header">
 								municipio
 							    </f:facet>
-								<p:outputLabel value="#{v.personaEmpleado.municipio.nombre}" />
+								<p:outputLabel value="#{v.personaEmpleado.municipio}" />
 							</p:column>
 							
 							<p:column>
 								<f:facet name="header">
 								area empresa
 							    </f:facet>
-								<p:outputLabel value="#{v.personaEmpleado.areaEmpresa.nombre}" />
+								<p:outputLabel value="#{v.personaEmpleado.areaEmpresa}" />
 							</p:column>
 													
 						</p:dataTable>
@@ -301,7 +259,7 @@
 				</p:accordionPanel>
 				
 				<h:panelGrid columns="1">
-					<p:commandButton id="btregis"  ajax="false" value="Paso 2 ETL: Transformacion"  action="/paginas/seguro/etl/Transformation.xhtml?faces-redirect=true" class="register"/>
+					<p:commandButton action="#{transformationETL.cargar()}" id="btregis"  ajax="false" value="Paso 3 ETL: Cargar datos al Data Warehouse" class="register"/>
 				</h:panelGrid>
 				</p:tab>
 			</p:tabView>
