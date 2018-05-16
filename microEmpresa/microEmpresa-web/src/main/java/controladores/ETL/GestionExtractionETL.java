@@ -31,9 +31,9 @@ public class GestionExtractionETL implements Serializable{
 	@EJB
 	private ExtractionETL extractionETL;
 	
-	List<Auditoria> auditorias;
+	public static List<Auditoria> auditorias;
 	
-	List<Venta> ventas;
+	public static List<Venta> ventas;
 	
 	@PostConstruct
 	public void inicializar(){

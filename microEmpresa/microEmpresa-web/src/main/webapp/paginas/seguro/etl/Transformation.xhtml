@@ -7,10 +7,15 @@
 	<ui:define name="cuerpo">
 		<h:form prependId="false" id="gestion">
 			<p:tabView id="tablaContent">
-			<p:tab title="ETL Proceso 2: Transformation" dynamic="true" cache="true">			
-				<p:accordionPanel id="panelTablaEmp" >
+			<p:tab title="ETL Proceso 2: Transformation" dynamic="true" cache="true">
+
+				<h:panelGrid columns="1">
+					<p:commandButton rendered="#{transformationETL.auditoriasDW == null}" action="/paginas/seguro/etl/Extraction.xhtml?faces-redirect=true" id="aviso"  ajax="false" value="Vamos colega! realiza el proceso 1 de ETL: Extraccion" class="register aviso animated flash"/>
+				</h:panelGrid>
+							
+				<p:accordionPanel id="panelTablaEmp">
 				
-					<p:tab title="Auditoria">
+					<p:tab title="Auditoria" rendered="#{transformationETL.auditoriasDW.size() > 0}">
 						<p:dataTable value="#{transformationETL.auditoriasDW}" id="tabla"
 							var="a" border="1">
 							
@@ -67,7 +72,7 @@
 					</p:tab>
 					
 					
-					<p:tab title="Ventas">
+					<p:tab title="Ventas" rendered="#{transformationETL.ventasDW.size() > 0}">
 						<p:dataTable value="#{transformationETL.ventasDW}" id="tabla2"
 							var="v" border="1">
 							
@@ -116,7 +121,7 @@
 						</p:dataTable>
 					</p:tab>
 					
-					<p:tab title="Clientes">
+					<p:tab title="Clientes" rendered="#{transformationETL.ventasDW.size() > 0}">
 						<p:dataTable value="#{transformationETL.ventasDW}" id="tabla3"
 							var="v" border="1">
 							
@@ -186,7 +191,7 @@
 						</p:dataTable>
 					</p:tab>
 					
-					<p:tab title="Émpleados">
+					<p:tab title="Émpleados" rendered="#{transformationETL.ventasDW.size() > 0}">
 						<p:dataTable value="#{transformationETL.ventasDW}" id="tabla4"
 							var="v" border="1">
 							
@@ -259,7 +264,7 @@
 				</p:accordionPanel>
 				
 				<h:panelGrid columns="1">
-					<p:commandButton action="#{transformationETL.cargar()}" id="btregis"  ajax="false" value="Paso 3 ETL: Cargar datos al Data Warehouse" class="register"/>
+					<p:commandButton rendered="#{transformationETL.auditoriasDW != null}" action="#{transformationETL.cargar()}" id="btregis"  ajax="false" value="Paso 3 ETL: Cargar datos al Data Warehouse" class="register"/>
 				</h:panelGrid>
 				</p:tab>
 			</p:tabView>

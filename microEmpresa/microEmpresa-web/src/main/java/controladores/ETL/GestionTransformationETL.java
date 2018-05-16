@@ -33,6 +33,9 @@ public class GestionTransformationETL implements Serializable{
 	@Inject
 	private SessionController sesion;
 	
+	@Inject
+	GestionExtractionETL extractionETL;
+	
 	@EJB
 	private TransformationETL transformationETL;
 	
@@ -56,15 +59,26 @@ public class GestionTransformationETL implements Serializable{
 	 * Lista la informacion de las tablas ya transformadas
 	 */
 	public void listar(){
-		auditoriasDW = transformationETL.auditoriaDW(auditorias);
-		ventasDW = transformationETL.ventaDW(ventas);
+		try{
+			auditorias = extractionETL.getAuditorias();
+			ventas = extractionETL.getVentas();
+			if(auditorias.size() > 0 || ventas.size() > 0){
+				auditoriasDW = transformationETL.auditoriaDW(auditorias);
+				ventasDW = transformationETL.ventaDW(ventas);
+			}else{
+				Messages.addFlashGlobalInfo("Vamos colega! realiza el paso 1 de ETL");
+			}
+		}catch(Exception e){
+			Messages.addFlashGlobalInfo("Ups! esto no deberia haber pasado");
+		}
 	}
 	
 	/**
 	 * Cargar datos al data warehouse
 	 */
-	public void cargar(){
-		Messages.addFlashGlobalInfo("Trabajando en ello tio");
+	public String cargar(){
+		Messages.addFlashGlobalInfo("Proceso de ETL finalizado correctamente");
+		return "/paginas/seguro/administrador/GestionEmpresa.xhtml?faces-redirect=true";
 	}
 
 	/**
