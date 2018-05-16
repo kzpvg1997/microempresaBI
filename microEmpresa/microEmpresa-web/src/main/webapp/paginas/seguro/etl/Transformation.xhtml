@@ -12,20 +12,18 @@
 				<h:panelGrid columns="1">
 					<p:commandButton rendered="#{transformationETL.auditoriasDW == null}" action="/paginas/seguro/etl/Extraction.xhtml?faces-redirect=true" id="aviso"  ajax="false" value="Vamos colega! realiza el proceso 1 de ETL: Extraccion" class="register aviso animated flash"/>
 				</h:panelGrid>
+				
+				<div class="tipocarga">
+				<h:outputText value="Tipo de carga de datos: Acumulacion Simple" rendered="#{extractionETL.tipoCargaDatos == 1}"/>
+				<h:outputText value="Tipo de carga de datos: Rollin" rendered="#{extractionETL.tipoCargaDatos == 2}"/>
+				</div>
 							
 				<p:accordionPanel id="panelTablaEmp">
 				
 					<p:tab title="Auditoria" rendered="#{transformationETL.auditoriasDW.size() > 0}">
 						<p:dataTable value="#{transformationETL.auditoriasDW}" id="tabla"
 							var="a" border="1">
-							
-							<p:column>
-								<f:facet name="header">
-								Id
-							</f:facet>
-								<p:outputLabel value="#{a.id}" />
-							</p:column>
-							
+														
 							<p:column>
 								<f:facet name="header">
 								Accion
@@ -75,14 +73,7 @@
 					<p:tab title="Ventas" rendered="#{transformationETL.ventasDW.size() > 0}">
 						<p:dataTable value="#{transformationETL.ventasDW}" id="tabla2"
 							var="v" border="1">
-							
-							<p:column>
-								<f:facet name="header">
-								codigo
-							</f:facet>
-								<p:outputLabel value="#{v.codigo}" />
-							</p:column>
-							
+	
 							<p:column>
 								<f:facet name="header">
 								fecha_venta
@@ -124,13 +115,6 @@
 					<p:tab title="Clientes" rendered="#{transformationETL.ventasDW.size() > 0}">
 						<p:dataTable value="#{transformationETL.ventasDW}" id="tabla3"
 							var="v" border="1">
-							
-							<p:column>
-								<f:facet name="header">
-								codigo
-							    </f:facet>
-								<p:outputLabel value="#{v.personaCliente.codigo}" />
-							</p:column>
 							
 							<p:column>
 								<f:facet name="header">
@@ -197,13 +181,6 @@
 							
 							<p:column>
 								<f:facet name="header">
-								codigo
-							    </f:facet>
-								<p:outputLabel value="#{v.personaEmpleado.codigo}" />
-							</p:column>
-							
-							<p:column>
-								<f:facet name="header">
 								cedula
 							    </f:facet>
 								<p:outputLabel value="#{v.personaEmpleado.cedula}" />
@@ -263,7 +240,8 @@
 					
 				</p:accordionPanel>
 				
-				<h:panelGrid columns="1">
+				<h:panelGrid columns="2">
+				    <p:commandButton id="btatras"  ajax="false" value="Regresar"  action="/paginas/seguro/etl/Extraction.xhtml?faces-redirect=true" class="login"/>
 					<p:commandButton rendered="#{transformationETL.auditoriasDW != null}" action="#{transformationETL.cargar()}" id="btregis"  ajax="false" value="Paso 3 ETL: Cargar datos al Data Warehouse" class="register"/>
 				</h:panelGrid>
 				</p:tab>

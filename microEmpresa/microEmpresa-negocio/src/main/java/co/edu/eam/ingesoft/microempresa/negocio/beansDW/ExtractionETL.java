@@ -25,7 +25,7 @@ public class ExtractionETL {
 	private Persistencia conexion;
 	
 	/**
-	 * Extrae todos los registros de una determinada tabla de la bd
+	 * Extrae todos los registros de una determinada tabla de la bd especificada
 	 * @param bd base de datos de la cual va a extraer los registros
 	 * @param tabla consulta de la tabla
 	 * @return lista de registros
@@ -41,13 +41,12 @@ public class ExtractionETL {
 	 * @return lista de registros
 	 */
 	public List<Object> extraerAll(String tabla){
-		return extraer(2, tabla);
-	//	List<Object> lista = new ArrayList<Object>(extraer(2, tabla)); 342 (1) -- 
-//		if(lista.addAll(extraer(2, tabla))){
-//			return lista;
-//		}else{
-//			throw new excepciones.ExcepcionFuncional("Extraction ETL: No se pudo unir los dos listados");
-//		}
+		List<Object> lista = new ArrayList<Object>(extraer(1, tabla));
+		if(lista.addAll(extraer(2, tabla))){
+			return lista;
+		}else{
+			throw new excepciones.ExcepcionFuncional("Extraction ETL: Union de los listados");
+		}
 	}
 	
 

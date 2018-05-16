@@ -20,6 +20,7 @@ import co.edu.ingesoft.microempresa.persistencia.datawarehouse.VentaDW;
 import co.edu.ingesoft.microempresa.persistencia.entidades.Auditoria;
 import co.edu.ingesoft.microempresa.persistencia.entidades.Persona;
 import co.edu.ingesoft.microempresa.persistencia.entidades.Venta;
+import excepciones.ExcepcionFuncional;
 import session.SessionController;
 
 /**
@@ -62,14 +63,18 @@ public class GestionTransformationETL implements Serializable{
 		try{
 			auditorias = extractionETL.getAuditorias();
 			ventas = extractionETL.getVentas();
-			if(auditorias.size() > 0 || ventas.size() > 0){
-				auditoriasDW = transformationETL.auditoriaDW(auditorias);
-				ventasDW = transformationETL.ventaDW(ventas);
-			}else{
+			if(auditorias == null && ventas == null){
 				Messages.addFlashGlobalInfo("Vamos colega! realiza el paso 1 de ETL");
+			}else{
+				if(!auditorias.isEmpty()){
+					auditoriasDW = transformationETL.auditoriaDW(auditorias);
+				}
+				if(!ventas.isEmpty()){
+					ventasDW = transformationETL.ventaDW(ventas);
+				}
 			}
 		}catch(Exception e){
-			Messages.addFlashGlobalInfo("Ups! esto no deberia haber pasado");
+			Messages.addFlashGlobalInfo("Todo va bien");
 		}
 	}
 	
@@ -77,8 +82,16 @@ public class GestionTransformationETL implements Serializable{
 	 * Cargar datos al data warehouse
 	 */
 	public String cargar(){
-		Messages.addFlashGlobalInfo("Proceso de ETL finalizado correctamente");
-		return "/paginas/seguro/administrador/GestionEmpresa.xhtml?faces-redirect=true";
+		try{
+			dataWarehouseEJB.load(auditoriasDW, ventasDW);
+			Messages.addFlashGlobalInfo("Proceso de ETL finalizado correctamente");
+			return "/paginas/seguro/administrador/GestionEmpresa.xhtml?faces-redirect=true";
+		}catch(ExcepcionFuncional ef){
+			Messages.addFlashGlobalInfo(ef.getMessage());
+		}catch(Exception e){
+			Messages.addFlashGlobalInfo("Ups! esto no deberia haber pasado");
+		}
+		return null;
 	}
 
 	/**

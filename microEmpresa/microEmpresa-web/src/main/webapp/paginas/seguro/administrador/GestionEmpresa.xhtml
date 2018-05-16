@@ -57,7 +57,12 @@
 
 			</p:fieldset>
 			
-			<h:panelGrid columns="1">
+			<h:panelGrid columns="3">
+				<p:outputLabel for="tftipocarga" id="tipoCarga" value="Carga de datos" />
+				<h:selectOneMenu id="tftipocarga" class="form-control" value="#{extractionETL.tipoCargaDatos}">
+					<f:selectItem itemValue="1" itemLabel="Acumulacion Simple" />
+					<f:selectItem itemValue="2" itemLabel="Rolling" />
+				</h:selectOneMenu>
 				<p:commandButton id="btregis"  ajax="false" value="Iniciar proceso ETL"  action="/paginas/seguro/etl/Extraction.xhtml?faces-redirect=true" class="register"/>
 			</h:panelGrid>
 			

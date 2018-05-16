@@ -13,6 +13,15 @@
     padding: 7px!important;
     font-size: 14px;
 }
+.tipocarga{
+	padding: 15px;
+    background: #ffc10761;
+    text-align: left;
+    overflow: hidden;
+    clear: both;
+    border: 1px solid #0003;
+    margin-bottom: 20px;
+}
 .bdConnect{
 	
 	background: #F4D03F!important;	

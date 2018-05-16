@@ -33,7 +33,6 @@ public class TransformationETL {
 		List<AuditoriaDW> list = new ArrayList<AuditoriaDW>();
 		for (Auditoria a : lista) {
 			AuditoriaDW auditoriaDW = new  AuditoriaDW();
-			auditoriaDW.setId(a.getId());
 			auditoriaDW.setAccion(a.getAccion());
 			auditoriaDW.setFecha(a.getFecha());
 			auditoriaDW.setNavegador(a.getNavegador());
@@ -54,13 +53,13 @@ public class TransformationETL {
 		List<VentaDW> list = new ArrayList<VentaDW>();
 		for (Venta v : lista) {
 			VentaDW ventaDW = new VentaDW();
-			ventaDW.setCodigo(v.getCodigo());
+			//ventaDW.setCodigo(v.getCodigo());
 			ventaDW.setFachaVenta(v.getFachaVenta());
 			ventaDW.setValorTotal(v.getValorTotal());
 			ClienteDW cliente = new ClienteDW();
 			cliente.setAreaEmpresa(v.getPersonaCliente().getAreaEmpresa().getNombre());
 			cliente.setCedula(v.getPersonaCliente().getCedula());
-			cliente.setCodigo(v.getPersonaCliente().getCodigo());
+			//cliente.setCodigo(v.getPersonaCliente().getCodigo());
 			cliente.setFechaIngreso(v.getPersonaCliente().getFechaIngreso());
 			cliente.setFechaNacimiento(v.getPersonaCliente().getFechaNacimiento());
 			cliente.setGenero(v.getPersonaCliente().getGenero().getNombre());
@@ -71,7 +70,7 @@ public class TransformationETL {
 			EmpleadoDW empleado = new EmpleadoDW();
 			empleado.setAreaEmpresa(v.getPersonaEmpleado().getAreaEmpresa().getNombre());
 			empleado.setCedula(v.getPersonaEmpleado().getCedula());
-			empleado.setCodigo(v.getPersonaEmpleado().getCodigo());
+			//empleado.setCodigo(v.getPersonaEmpleado().getCodigo());
 			empleado.setFechaIngreso(v.getPersonaEmpleado().getFechaIngreso());
 			empleado.setFechaNacimiento(v.getPersonaEmpleado().getFechaNacimiento());
 			empleado.setGenero(v.getPersonaEmpleado().getGenero().getNombre());

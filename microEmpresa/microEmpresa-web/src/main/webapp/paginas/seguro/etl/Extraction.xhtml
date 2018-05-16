@@ -13,6 +13,11 @@
 					<p:commandButton rendered="#{extractionETL.ventas == null and extractionETL.auditorias == null}" id="aviso"  ajax="false" value="No hay informacion para realizar el proceso de ETL" class="register aviso animated flash"/>
 				</h:panelGrid>
 				
+				<div class="tipocarga">
+				<h:outputText value="Tipo de carga de datos: Acumulacion Simple" rendered="#{extractionETL.tipoCargaDatos == 1}"/>
+				<h:outputText value="Tipo de carga de datos: Rollin" rendered="#{extractionETL.tipoCargaDatos == 2}"/>
+				</div>
+				
 				<p:accordionPanel id="panelTablaEmp" >
 				
 					<p:tab title="Registros de Auditoria" rendered="#{extractionETL.auditorias.size() > 0}">
@@ -305,7 +310,8 @@
 					
 				</p:accordionPanel>
 				
-				<h:panelGrid columns="1">
+				<h:panelGrid columns="2">
+				    <p:commandButton id="btatras"  ajax="false" value="Regresar"  action="/paginas/seguro/administrador/GestionEmpresa.xhtml?faces-redirect=true" class="login"/>
 					<p:commandButton rendered="#{extractionETL.ventas.size() > 0 || extractionETL.auditorias.size() > 0}" id="btregis"  ajax="false" value="Paso 2 ETL: Transformacion"  action="/paginas/seguro/etl/Transformation.xhtml?faces-redirect=true" class="register"/>
 				</h:panelGrid>
 				</p:tab>

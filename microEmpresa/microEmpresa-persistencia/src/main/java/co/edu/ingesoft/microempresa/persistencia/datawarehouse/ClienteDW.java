@@ -8,7 +8,10 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,7 +35,7 @@ import javax.persistence.TemporalType;
  * 10. se valida que el salario no sea negativo, en caso de ser negativo. se deja el valor promedio.
  */
 @Entity
-@Table(name="Personas_DW")
+@Table(name="Clientes_DW")
 public class ClienteDW implements  Serializable{
 	
 	/**
@@ -40,8 +43,8 @@ public class ClienteDW implements  Serializable{
 	 */
 	@Id
 	@Column(name="codigo")
-	//@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PERSONA_DW_SEQ")
-   // @SequenceGenerator(sequenceName = "persona_seq", allocationSize = 1, name = "PERSONA_DW_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CLIENTE_DW_SEQ")
+    @SequenceGenerator(sequenceName = "cliente_dw_seq", allocationSize = 1, name = "CLIENTE_DW_SEQ")
 	private int codigo;
 	
 	@Column(name="cedula",nullable=false)

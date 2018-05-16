@@ -35,6 +35,8 @@ public class GestionExtractionETL implements Serializable{
 	
 	public static List<Venta> ventas;
 	
+	public static int tipoCargaDatos;
+	
 	@PostConstruct
 	public void inicializar(){
 		listar();
@@ -48,7 +50,9 @@ public class GestionExtractionETL implements Serializable{
 			auditorias = (List<Auditoria>)(Object)extractionETL.extraerAll(Auditoria.todo);
 			ventas = (List<Venta>)(Object)extractionETL.extraerAll(Venta.todo);
 		}catch (excepciones.ExcepcionFuncional e) {
-			Messages.addFlashGlobalWarn(e.getMessage());
+			Messages.addFlashGlobalInfo(e.getMessage());
+		}catch(Exception e){
+			Messages.addFlashGlobalInfo("El sistema ha hecho BUM!");
 		}
 	}
 
@@ -66,6 +70,20 @@ public class GestionExtractionETL implements Serializable{
 
 	public void setVentas(List<Venta> ventas) {
 		this.ventas = ventas;
+	}
+
+	/**
+	 * @return the tipoCargaDatos
+	 */
+	public int getTipoCargaDatos() {
+		return tipoCargaDatos;
+	}
+
+	/**
+	 * @param tipoCargaDatos the tipoCargaDatos to set
+	 */
+	public void setTipoCargaDatos(int tipoCargaDatos) {
+		GestionExtractionETL.tipoCargaDatos = tipoCargaDatos;
 	}
 	
 }

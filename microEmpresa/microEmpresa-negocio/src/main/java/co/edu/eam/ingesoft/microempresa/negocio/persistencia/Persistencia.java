@@ -9,6 +9,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 import co.edu.ingesoft.microempresa.persistencia.entidades.Persona;
 import excepciones.ExcepcionFuncional;
@@ -48,6 +50,7 @@ public class Persistencia  implements Serializable{
 	/**
 	 * Guarda en la base de datos
 	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void crear(Object objeto){
 		switch (this.bd) {
 		case 1:
@@ -64,6 +67,7 @@ public class Persistencia  implements Serializable{
 	/**
 	 * Edita en la base de datos
 	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void editar(Object objeto){
 		switch (this.bd) {
 		case 1:
@@ -81,6 +85,7 @@ public class Persistencia  implements Serializable{
 	/**
 	 * Elimina de la base de datos
 	 */
+	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void eliminar(Object objeto){
 		switch (this.bd) {
 		case 1:
@@ -100,6 +105,7 @@ public class Persistencia  implements Serializable{
 	 * @param pk el identificador del registro a buscar
 	 * @return retorna el registro encontrado, de lo contrario null
 	 */
+	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 	public Object buscar(Class type, Object pk){
 		switch (this.bd) {
 		case 1:
@@ -116,6 +122,7 @@ public class Persistencia  implements Serializable{
 	 * @param parametro el parametro por ql cual se desea busacar
 	 * @return el objeto que se desea buscar
 	 */
+	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 	public Object buscarXParametroInt (Class type,int parametro){
 		switch (this.bd) {
 		case 1:
@@ -146,6 +153,7 @@ public class Persistencia  implements Serializable{
 	 * @param sql consulta a ejecutar, nos traera objetos de una determinada tabla
 	 * @return lista de los objetos encontrados
 	 */
+	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 	public List<Object> listar(String sql){
 		switch (this.bd) {
 		case 1:
@@ -165,6 +173,7 @@ public class Persistencia  implements Serializable{
 	 * @parametro el parametro necesario para la consulta
 	 * @return lista de los objetos encontrados
 	 */
+	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 	public List<Object> listarConParametroInteger(String sql, Object parametro){
 		switch (this.bd) {
 		case 1:
@@ -186,6 +195,7 @@ public class Persistencia  implements Serializable{
 	 * @parametro el parametro necesario para la consulta
 	 * @return lista de los objetos encontrados
 	 */
+	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 	public List<Object> listarConParametroString(String sql, String parametro){
 		switch (this.bd) {
 		case 1:
@@ -206,6 +216,7 @@ public class Persistencia  implements Serializable{
 	 * @param sql consulta a ejecutar, nos traera objetos de una determinada tabla
 	 * @return lista de los objetos encontrados
 	 */
+	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 	public List<Object> listarCon2BasesDatos(String sql){
 			Query q = emO.createNamedQuery(sql);
 			Query p = emP.createNamedQuery(sql);
