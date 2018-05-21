@@ -69,6 +69,61 @@
 						</p:dataTable>
 					</p:tab>
 					
+					<p:tab title="Usuarios" rendered="#{transformationETL.auditoriasDW.size() > 0}">
+						<p:dataTable value="#{transformationETL.auditoriasDW}" id="tablausuarios"
+							var="u" border="1">
+							
+							<p:column>
+								<f:facet name="header">
+								username
+							    </f:facet>
+								<p:outputLabel value="#{u.usuario.usuario}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								cedula
+							    </f:facet>
+								<p:outputLabel value="#{u.usuario.cedula}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								genero
+							    </f:facet>
+								<p:outputLabel value="#{u.usuario.genero}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								fecha nacimiento
+							    </f:facet>
+								<p:outputLabel value="#{u.usuario.fechaNacimiento}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								rol
+							    </f:facet>
+								<p:outputLabel value="#{u.usuario.rol}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								municipio
+							    </f:facet>
+								<p:outputLabel value="#{u.usuario.municipio}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								departamento
+							    </f:facet>
+								<p:outputLabel value="#{u.usuario.departamento}" />
+							</p:column>
+													
+						</p:dataTable>
+					</p:tab>
 					
 					<p:tab title="Ventas" rendered="#{transformationETL.ventasDW.size() > 0}">
 						<p:dataTable value="#{transformationETL.ventasDW}" id="tabla2"
@@ -167,6 +222,13 @@
 							
 							<p:column>
 								<f:facet name="header">
+								departamento
+							    </f:facet>
+								<p:outputLabel value="#{v.personaCliente.departamento}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
 								area empresa
 							    </f:facet>
 								<p:outputLabel value="#{v.personaCliente.areaEmpresa}" />
@@ -226,6 +288,13 @@
 								municipio
 							    </f:facet>
 								<p:outputLabel value="#{v.personaEmpleado.municipio}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								departamento
+							    </f:facet>
+								<p:outputLabel value="#{v.personaEmpleado.departamento}" />
 							</p:column>
 							
 							<p:column>

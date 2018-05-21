@@ -45,6 +45,7 @@ public class GestionExtractionETL implements Serializable{
 	@PostConstruct
 	public void inicializar(){
 		listar();
+		auditoria("Extraccion");
 	}
 	
 	/**
@@ -54,7 +55,6 @@ public class GestionExtractionETL implements Serializable{
 		try{
 			auditorias = (List<Auditoria>)(Object)extractionETL.extraerAll(Auditoria.todo);
 			ventas = (List<Venta>)(Object)extractionETL.extraerAll(Venta.todo);
-			auditoria("Extraccion");
 		}catch (excepciones.ExcepcionFuncional e) {
 			Messages.addFlashGlobalInfo(e.getMessage());
 		}catch(Exception e){

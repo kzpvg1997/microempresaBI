@@ -76,6 +76,138 @@
 						</p:dataTable>
 					</p:tab>
 					
+					<p:tab title="Registros de usuarios"  rendered="#{extractionETL.auditorias.size() > 0}">
+						<p:dataTable value="#{extractionETL.auditorias}" id="tablausers"
+							var="u" border="1">
+							
+							<p:column>
+								<f:facet name="header">
+								codigo
+							    </f:facet>
+								<p:outputLabel value="#{u.usuario.codigo}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								username
+							    </f:facet>
+								<p:outputLabel value="#{u.usuario.username}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								password
+							    </f:facet>
+								<p:outputLabel value="********" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								estado
+							    </f:facet>
+								<p:outputLabel value="#{u.usuario.estado}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								persona
+							    </f:facet>
+								<p:outputLabel value="#{u.usuario.persona.codigo}" />
+							</p:column>
+													
+						</p:dataTable>
+					</p:tab>
+
+					<p:tab title="Registros de personas usuarios"  rendered="#{extractionETL.auditorias.size() > 0}">
+						<p:dataTable value="#{extractionETL.auditorias}" id="tablapersonasusers"
+							var="u" border="1">
+							
+							<p:column>
+								<f:facet name="header">
+								codigo
+							    </f:facet>
+								<p:outputLabel value="#{u.usuario.persona.codigo}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								cedula
+							    </f:facet>
+								<p:outputLabel value="#{u.usuario.persona.cedula}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								nombre
+							    </f:facet>
+								<p:outputLabel value="#{u.usuario.persona.nombre}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								apellido
+							    </f:facet>
+								<p:outputLabel value="#{u.usuario.persona.apellido}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								telefono
+							    </f:facet>
+								<p:outputLabel value="#{u.usuario.persona.telefono}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								genero
+							    </f:facet>
+								<p:outputLabel value="#{u.usuario.persona.genero.nombre}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								fecha nacimiento
+							    </f:facet>
+								<p:outputLabel value="#{u.usuario.persona.fechaNacimiento}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								fecha ingreso
+							    </f:facet>
+								<p:outputLabel value="#{u.usuario.persona.fechaIngreso}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								salario
+							    </f:facet>
+								<p:outputLabel value="#{u.usuario.persona.salario}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								rol
+							    </f:facet>
+								<p:outputLabel value="#{u.usuario.persona.rol.nombre}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								municipio
+							    </f:facet>
+								<p:outputLabel value="#{u.usuario.persona.municipio.nombre}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								area empresa
+							    </f:facet>
+								<p:outputLabel value="#{u.usuario.persona.areaEmpresa.nombre}" />
+							</p:column>
+													
+						</p:dataTable>
+					</p:tab>
 					
 					<p:tab title="Registros de Ventas" rendered="#{extractionETL.ventas.size() > 0}">
 						<p:dataTable value="#{extractionETL.ventas}" id="tabla2"

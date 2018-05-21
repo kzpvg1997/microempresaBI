@@ -66,6 +66,36 @@
 				<p:commandButton id="btregis"  ajax="false" value="Iniciar proceso ETL"  action="/paginas/seguro/etl/Extraction.xhtml?faces-redirect=true" class="register"/>
 			</h:panelGrid>
 			
+				<p:accordionPanel id="panelTablaEmpa" >
+					<p:tab title="Informacion detallada de los procesos realizados de etl">
+						<p:dataTable value="#{transformationETL.auditoriaETL}" id="tablaauditoriaetl"
+							var="a" border="1">
+							
+							<p:column>
+								<f:facet name="header">
+								Accion
+							</f:facet>
+								<p:outputLabel value="#{a.accion}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								Fecha
+							</f:facet>
+								<p:outputLabel value="#{a.fecha}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								Usuario
+							</f:facet>
+								<p:outputLabel value="#{a.usuario.username}" />
+							</p:column>
+													
+						</p:dataTable>
+					</p:tab>
+				</p:accordionPanel>
+			
 			<p:accordionPanel id="panelTablaEmp"  style="margin-top:15px">
 				<p:tab title="Empresas Registradas">
 					<p:dataTable value="#{gestionEmpresaController.listaEmpresas}" id="tablaEmp"

@@ -6,6 +6,7 @@ package co.edu.ingesoft.microempresa.persistencia.datawarehouse;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -55,14 +56,14 @@ public class VentaDW implements Serializable{
 	/**
 	 * El empleado que realizo la venta
 	 */
-	@ManyToOne
+	@ManyToOne(cascade={CascadeType.ALL})
 	@JoinColumn(name="empleado",nullable=false)
 	private EmpleadoDW personaEmpleado;
 	
 	/**
 	 * El cliente que ralizo la compra
 	 */
-	@ManyToOne
+	@ManyToOne(cascade={CascadeType.ALL})
 	@JoinColumn(name="cliente",nullable=false)
 	private ClienteDW personaCliente;
 	

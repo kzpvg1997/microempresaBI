@@ -3,6 +3,7 @@ package co.edu.ingesoft.microempresa.persistencia.datawarehouse;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -57,7 +58,7 @@ public class AuditoriaDW implements Serializable{
 	@Column(name="fecha",nullable=false)
 	private Date fecha;
 	
-	@ManyToOne
+	@ManyToOne(cascade={CascadeType.ALL})
 	@JoinColumn(name="usuario",nullable=true)
 	private UsuarioDW usuario;
 

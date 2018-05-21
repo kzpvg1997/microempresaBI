@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -36,7 +38,12 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="Empleados_DW")
+@NamedQueries({
+	@NamedQuery(name=EmpleadoDW.byCedula,query="SELECT e FROM EmpleadoDW e WHERE e.cedula=?1")
+})
 public class EmpleadoDW implements  Serializable{
+	
+	public static final String byCedula = "EmpleadoDW.byCedula";
 	
 	/**
 	 * Por optimizacion, el id es auto incrementable y de valor numerico
@@ -69,6 +76,9 @@ public class EmpleadoDW implements  Serializable{
 	
 	@Column(name="municipio",nullable=false)
 	private String municipio;
+	
+	@Column(name="departamento",nullable=false)
+	private String departamento;
 	
 	@Column(name="area_empresa",nullable=false)
 	private String areaEmpresa;
@@ -165,6 +175,20 @@ public class EmpleadoDW implements  Serializable{
 
 	public void setAreaEmpresa(String areaEmpresa) {
 		this.areaEmpresa = areaEmpresa;
+	}
+
+	/**
+	 * @return the departamento
+	 */
+	public String getDepartamento() {
+		return departamento;
+	}
+
+	/**
+	 * @param departamento the departamento to set
+	 */
+	public void setDepartamento(String departamento) {
+		this.departamento = departamento;
 	}
 	
 }

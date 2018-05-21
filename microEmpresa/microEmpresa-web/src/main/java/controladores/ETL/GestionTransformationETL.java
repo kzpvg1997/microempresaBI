@@ -56,9 +56,12 @@ public class GestionTransformationETL implements Serializable{
 	
 	List<VentaDW> ventasDW;
 	
+	private List<Auditoria> auditoriaETL;
+	
 	@PostConstruct
 	public void inicializar(){
 		listar();
+		auditoria("Transformacion");
 	}
 	
 	/**
@@ -66,6 +69,7 @@ public class GestionTransformationETL implements Serializable{
 	 */
 	public void listar(){
 		try{
+			auditoriaETL = auditoriaEJB.listarByTabla("ETL", sesion.getBd());
 			auditorias = extractionETL.getAuditorias();
 			ventas = extractionETL.getVentas();
 			if(auditorias == null && ventas == null){
@@ -77,7 +81,6 @@ public class GestionTransformationETL implements Serializable{
 				if(!ventas.isEmpty()){
 					ventasDW = transformationETL.ventaDW(ventas);
 				}
-				auditoria("Transformacion");
 			}
 		}catch(Exception e){
 			Messages.addFlashGlobalInfo("Todo va bien");
@@ -162,5 +165,18 @@ public class GestionTransformationETL implements Serializable{
 	public void setVentasDW(List<VentaDW> ventasDW) {
 		this.ventasDW = ventasDW;
 	}
-	
+
+	/**
+	 * @return the auditoriaETL
+	 */
+	public List<Auditoria> getAuditoriaETL() {
+		return auditoriaETL;
+	}
+
+	/**
+	 * @param auditoriaETL the auditoriaETL to set
+	 */
+	public void setAuditoriaETL(List<Auditoria> auditoriaETL) {
+		this.auditoriaETL = auditoriaETL;
+	}
 }
