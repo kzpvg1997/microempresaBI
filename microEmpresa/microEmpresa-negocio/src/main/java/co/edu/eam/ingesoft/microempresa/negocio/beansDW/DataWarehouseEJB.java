@@ -26,6 +26,11 @@ public class DataWarehouseEJB {
 	@PersistenceContext(unitName = "mysql")
 	private EntityManager emM;
 	
+	/**
+	 * Ultimo proceso de Etl load, para el data warehouse
+	 * @param auditoriasDW
+	 * @param ventasDW
+	 */
 	public void load(List<AuditoriaDW> auditoriasDW, List<VentaDW> ventasDW){
 		if(auditoriasDW != null){
 			for (AuditoriaDW auditoriaDW : auditoriasDW) {
@@ -37,5 +42,12 @@ public class DataWarehouseEJB {
 				emM.persist(ventaDW);
 			}
 		}
+	}
+	
+	/**
+	 * Elimina todos los registros de las tablas del data warehouse
+	 */
+	public void removeAllDW(){
+		emM.createNativeQuery("DELETE * FROM Auditoria_DW,Clientes_DW,Empleados_DW,Ventas_DW");
 	}
 }

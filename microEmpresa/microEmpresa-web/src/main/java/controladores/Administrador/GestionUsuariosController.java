@@ -239,6 +239,7 @@ public class GestionUsuariosController implements Serializable{
 		auditoria.setFecha(fecha);
 		auditoria.setOrigen(origen);
 		auditoria.setNavegador(navegador);
+		auditoria.setUsuario(sesion.getUsuario());
 		auditoriaEJB.crear(auditoria, sesion.getBd());
 	}
 	
@@ -256,6 +257,7 @@ public class GestionUsuariosController implements Serializable{
 		auditoria.setFecha(fecha);
 		auditoria.setOrigen(origen);
 		auditoria.setNavegador(navegador);
+		auditoria.setUsuario(sesion.getUsuario());
 		auditoriaEJB.crear(auditoria, sesion.getBd());
 	}
 	

@@ -125,6 +125,7 @@ public class GestionAccesosRolController implements Serializable{
 		auditoria.setFecha(fecha);
 		auditoria.setOrigen(origen);
 		auditoria.setNavegador(navegador);
+		auditoria.setUsuario(sesion.getUsuario());
 		auditoriaEJB.crear(auditoria, sesion.getBd());
 	}
 	

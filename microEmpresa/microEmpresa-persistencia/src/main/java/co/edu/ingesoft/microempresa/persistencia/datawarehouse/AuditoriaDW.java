@@ -8,10 +8,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import co.edu.ingesoft.microempresa.persistencia.entidades.Persona;
 
 /**
  * TABLA DE HECHO AUDITORIA
@@ -53,6 +57,9 @@ public class AuditoriaDW implements Serializable{
 	@Column(name="fecha",nullable=false)
 	private Date fecha;
 	
+	@ManyToOne
+	@JoinColumn(name="usuario",nullable=true)
+	private UsuarioDW usuario;
 
 	/**
 	 * 
@@ -158,6 +165,20 @@ public class AuditoriaDW implements Serializable{
 	 */
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
+	}
+
+	/**
+	 * @return the usuario
+	 */
+	public UsuarioDW getUsuario() {
+		return usuario;
+	}
+
+	/**
+	 * @param usuario the usuario to set
+	 */
+	public void setUsuario(UsuarioDW usuario) {
+		this.usuario = usuario;
 	}
 	
 }

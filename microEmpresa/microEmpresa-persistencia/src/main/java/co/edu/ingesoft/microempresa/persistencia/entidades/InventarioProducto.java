@@ -53,6 +53,26 @@ public class InventarioProducto implements Serializable{
 		
 	}
 
+	
+	
+	/**
+	 * @param inventario
+	 * @param producto
+	 * @param personaEmpleado
+	 * @param fechaIngreso
+	 * @param cantidad
+	 */
+	public InventarioProducto(Inventario inventario, Producto producto, Persona personaEmpleado, Date fechaIngreso,
+			int cantidad) {
+		super();
+		this.inventario = inventario;
+		this.producto = producto;
+		this.personaEmpleado = personaEmpleado;
+		this.fechaIngreso = fechaIngreso;
+		this.cantidad = cantidad;
+	}
+
+
 
 	/**
 	 * @return the inventario

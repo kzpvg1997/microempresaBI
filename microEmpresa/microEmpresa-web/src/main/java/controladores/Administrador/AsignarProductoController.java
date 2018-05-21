@@ -11,6 +11,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.ws.rs.core.FeatureContext;
 
 import org.omnifaces.cdi.ViewScoped;
 import org.omnifaces.util.Messages;
@@ -81,21 +82,20 @@ public class AsignarProductoController implements Serializable{
 	}
 	
 	public void asignarProducto(Producto p){
-		Messages.addFlashGlobalInfo(""+tabla.getRowIndex());
+		//Messages.addFlashGlobalInfo(""+tabla.getRowIndex());
 		try{
-			if(cantidad > 0){
-				InventarioProducto ip = productoEJB.buscarInventarioProducto(p.getCodigo(), inventarioSeleccionado, sesion.getBd());
+			//if(cantidad > 0){
+				InventarioProducto ip = productoEJB.buscarInventarioProducto(p.getCodigo(),inventarioSeleccionado, sesion.getBd());
 				if(ip==null){
 					Inventario i = inventarioEJB.buscar(inventarioSeleccionado, sesion.getBd());
+					Messages.addFlashGlobalInfo(i.getCodigo()+": de "+i.getLocalizacion());
 					InventarioProducto inv = new InventarioProducto();
-					inv.setInventario(i);
-					inv.setProducto(p);
-					System.out.println("---------------- valor cantidad --------------");
-					System.out.println("----------------(((( "+cantidad+" ))))--------------");
 					inv.setCantidad(cantidad);
 					Date d = new Date();
 					inv.setFechaIngreso(d);
 					inv.setPersonaEmpleado(sesion.getUsuario().getPersona());
+					inv.setProducto(p);
+					inv.setInventario(i);
 					productoEJB.asignarAInventario(inv, sesion.getBd());
 					Messages.addFlashGlobalInfo("El producto:"+inv.getProducto().getNombre()+" Se ha agregado correctamente");
 					listarTodo();
@@ -104,9 +104,9 @@ public class AsignarProductoController implements Serializable{
 				}else{
 					Messages.addFlashGlobalError("Este producto ya se encuentra registrado en el inventario");
 				}
-			}else{
-				Messages.addFlashGlobalInfo("Por favor, ingrese una cantidad");
-			}
+//			}else{
+//				Messages.addFlashGlobalInfo("Por favor, ingrese una cantidad");
+//			}
 		} catch (ExcepcionNegocio e) {
 			Messages.addGlobalError(e.getMessage());
 		} catch (Exception ex) {
@@ -149,6 +149,7 @@ public class AsignarProductoController implements Serializable{
 		auditoria.setFecha(fecha);
 		auditoria.setOrigen(origen);
 		auditoria.setNavegador(navegador);
+		auditoria.setUsuario(sesion.getUsuario());
 		auditoriaEJB.crear(auditoria, sesion.getBd());
 	}
 	

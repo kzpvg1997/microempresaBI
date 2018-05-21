@@ -139,6 +139,7 @@ public class SessionController implements Serializable {
 		auditoria.setFecha(fecha);
 		auditoria.setOrigen(origen);
 		auditoria.setNavegador(navegador);
+		auditoria.setUsuario(usuario);
 		if(bd == 0){
 			bd = 1;
 		}

@@ -26,13 +26,16 @@ import javax.persistence.Table;
 @NamedQueries({
 	@NamedQuery(name=Producto.listarProductos,query="SELECT p FROM Producto p"),
 	@NamedQuery(name=Producto.buscarByNombre,query="SELECT p FROM Producto p WHERE p.nombre=?1"),
-	@NamedQuery(name=Producto.listarProductosXInventario,query="SELECT ip FROM InventarioProducto ip where ip.inventario.codigo=?1")
+	@NamedQuery(name=Producto.listarProductosXInventario,query="SELECT ip FROM InventarioProducto ip where ip.inventario.codigo=?1"),
+	@NamedQuery(name=Producto.listarInventarioProducto,query="SELECT  ip FROM InventarioProducto ip")
 })
 public class Producto implements Serializable{
 
 	public static final String listarProductos = "Producto.listarProductos";
 	public static final String buscarByNombre = "Producto.buscarByNombre";
 	public static final String listarProductosXInventario = "Producto.listarProductosXInventario";
+	public static final String listarInventarioProducto = "Producto.lista_inventarios_productos";
+
 	
 	@Id
 	@Column(name="codigo")
