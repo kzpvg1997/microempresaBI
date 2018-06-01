@@ -1,6 +1,7 @@
 package co.edu.eam.ingesoft.microempresa.negocio.beansDW;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -45,13 +46,43 @@ public class TransformationETL {
 				u.setFechaNacimiento(a.getUsuario().getPersona().getFechaNacimiento());
 				u.setGenero(a.getUsuario().getPersona().getGenero().getNombre());
 				u.setMunicipio(a.getUsuario().getPersona().getMunicipio().getNombre());
-				u.setRol(a.getUsuario().getPersona().getNombre());
+				u.setRol(a.getUsuario().getPersona().getRol().getNombre());
 				u.setDepartamento(a.getUsuario().getPersona().getMunicipio().getDepartamento().getNombre());
 				u.setUsuario(a.getUsuario().getUsername());
+				u.setEdad(calculaEdad(u.getFechaNacimiento()));
 		    auditoriaDW.setUsuario(u);
 			list.add(auditoriaDW);
 		}
 		return list;
+	}
+	
+	/**
+	 * Obtiene los usuarios asociados a las auditorias
+	 * @param lista
+	 * @return
+	 */
+	public List<UsuarioDW> usuariosAuditoriaDW(List<AuditoriaDW> lista){
+		List<UsuarioDW> listado = new ArrayList<UsuarioDW>();
+		for (AuditoriaDW a : lista) {
+			if(!buscarSiExiste(listado, a.getUsuario().getCedula())){
+				listado.add(a.getUsuario());
+			}
+		}
+		return listado;
+	}
+	
+	/**
+	 * Busca si ya existe un usuario auditoria en el listado
+	 */
+	public boolean buscarSiExiste(List<UsuarioDW> lista, String cedula){
+		for (UsuarioDW u : lista) {
+			if(u.getCedula().equals(cedula)){
+				// si existe
+				return true;
+			}
+		}
+		// no existe
+		return false;
 	}
 	
 	/**
@@ -67,7 +98,7 @@ public class TransformationETL {
 			ventaDW.setFachaVenta(v.getFachaVenta());
 			ventaDW.setValorTotal(v.getValorTotal());
 				ClienteDW cliente = new ClienteDW();
-				cliente.setAreaEmpresa(v.getPersonaCliente().getAreaEmpresa().getNombre());
+				cliente.setAreaEmpresa(v.getPersonaEmpleado().getAreaEmpresa().getNombre());
 				cliente.setCedula(v.getPersonaCliente().getCedula());
 				cliente.setFechaIngreso(v.getPersonaCliente().getFechaIngreso());
 				cliente.setFechaNacimiento(v.getPersonaCliente().getFechaNacimiento());
@@ -76,6 +107,7 @@ public class TransformationETL {
 				cliente.setDepartamento(v.getPersonaCliente().getMunicipio().getDepartamento().getNombre());
 				cliente.setRol(v.getPersonaCliente().getRol().getNombre());
 				cliente.setSalario(v.getPersonaCliente().getSalario());
+				cliente.setEdad(calculaEdad(cliente.getFechaNacimiento()));
 			ventaDW.setPersonaCliente(cliente);
 				EmpleadoDW empleado = new EmpleadoDW();
 				empleado.setAreaEmpresa(v.getPersonaEmpleado().getAreaEmpresa().getNombre());
@@ -87,10 +119,26 @@ public class TransformationETL {
 				empleado.setDepartamento(v.getPersonaEmpleado().getMunicipio().getDepartamento().getNombre());
 				empleado.setRol(v.getPersonaEmpleado().getRol().getNombre());
 				empleado.setSalario(v.getPersonaEmpleado().getSalario());
+				empleado.setEdad(calculaEdad(empleado.getFechaNacimiento()));
 			ventaDW.setPersonaEmpleado(empleado);
 			list.add(ventaDW);
 		}
 		return list;
 	}
+	
+	/**
+	 * metodo para calcular la edad a partir de un calendar
+	 */	
+	private int calculaEdad(Date fechaNac) {
+        Date today = new Date();
+        int diff_year = today.getYear() -  fechaNac.getYear();
+        int diff_month = today.getMonth() - fechaNac.getMonth();
+        int diff_day = today.getDay() - fechaNac.getDay();
+        //Si está en ese año pero todavía no los ha cumplido
+        if (diff_month < 0 || (diff_month == 0 && diff_day < 0)) {
+            diff_year = diff_year - 1; //no aparecían los dos guiones del postincremento :|
+        }
+        return diff_year;
+    }
 	
 }

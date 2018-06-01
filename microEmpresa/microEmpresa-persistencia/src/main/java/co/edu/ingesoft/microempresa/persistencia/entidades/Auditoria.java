@@ -30,12 +30,14 @@ import javax.persistence.TemporalType;
 @Table(name="Auditoria")
 @NamedQueries({
 	@NamedQuery(name=Auditoria.ByTabla,query="SELECT a FROM Auditoria a WHERE a.tabla=?1"),
-	@NamedQuery(name=Auditoria.todo,query="SELECT a FROM Auditoria a")
+	@NamedQuery(name=Auditoria.todo,query="SELECT a FROM Auditoria a"),
+	@NamedQuery(name=Auditoria.ByFechas,query="SELECT a FROM Auditoria a WHERE a.fecha BETWEEN ?1 AND ?2")
 })
 public class Auditoria implements Serializable{
 	
 	public static final String ByTabla = "Auditoria.ByTabla";
 	public static final String todo = "Auditoria.todo";
+	public static final String ByFechas = "Auditoria.ByFechas";
 	
 	@Id
 	@Column(name="id")

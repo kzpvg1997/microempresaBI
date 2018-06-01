@@ -1,0 +1,90 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
+
+	<ui:define name="cuerpo">
+		<h:form prependId="false" >
+		
+		<p:tabView id="tablaDatosEmpresa" style="margin-top:100px">
+					<p:tab title="Generar Reporte" dynamic="true" cache="true">
+
+
+			<p:fieldset legend="Datos del Reporte" style="margin-top:10px">
+				<h:panelGrid id="dtEmp" columns="2">
+
+					<p:outputLabel for="tfnomRep" id="nomRe" value="Nombre de reporte:" />
+					<p:inputText id="tfnomRep" class="form-control"
+						value="#{ReportesDWController.nombreReporte}" placeholder="Ingrese Nombre"/>
+						
+					<p:outputLabel for="tfDescRep" id="desRep" value="Descripcion:" />
+					<p:inputTextarea id="tfDescRep" class="form-control"
+						value="#{ReportesDWController.descripcion}" placeholder="Ingrese Descripcion"/>
+
+					<p:outputLabel id="txtimg" value="Imagen:" />
+					<h:panelGroup>
+					<p:fileUpload id="fileImg" mode="single" fileUploadListener="#{ReportesDWController.subirReporte()}"
+					cancelLabel="Cancelar" uploadLabel="Subir Reporte" label="Seleccionar Imagen"
+					 update=":tablaDatosEmpresa:dtEmp:graphicImg" sizeLimit="512000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+					<p:graphicImage id="graphicImg" value="#{ReportesDWController.imagen}"
+					 width="150" height="150"/>					
+					</h:panelGroup>
+					
+					
+				</h:panelGrid>
+	
+
+			</p:fieldset>
+			
+			<p:accordionPanel id="panelTablaRep"  style="margin-top:15px">
+				<p:tab title="Reportes de usuario">
+					<p:dataTable value="#{ReportesDWController.listaReportes}" id="tablaRep"
+						var="a" border="1">
+						<p:column>
+							<f:facet name="header">
+							Codigo
+						</f:facet>
+							<p:outputLabel value="#{a.codigo}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+							Nombre
+						</f:facet>
+							<p:outputLabel value="#{a.nombreReporte}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+							Descripcion
+						</f:facet>
+							<p:outputLabel value="#{a.descripcion}" />
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">
+							Fecha Reporte
+						</f:facet>
+							<p:outputLabel value="#{a.fechaReporte}" />
+						</p:column>
+						
+						<p:column>
+						<f:facet name="header">
+							Opciones
+						</f:facet>
+							<p:commandButton
+							action="#{ReportesDWController.eliminar(a)}"
+							value="Borrar"
+								process="@this :tablaDatosEmpresa:panelTablaRep:tablaRep"
+								update=":tablaDatosEmpresa:panelTablaRep:tablaRep" class="eliminar"/>
+								</p:column>
+					</p:dataTable>
+				</p:tab>
+			</p:accordionPanel>
+			
+			</p:tab>	
+			
+			</p:tabView>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

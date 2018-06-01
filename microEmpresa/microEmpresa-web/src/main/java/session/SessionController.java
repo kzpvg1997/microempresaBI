@@ -59,6 +59,11 @@ public class SessionController implements Serializable {
 	 */
 	private List<Acceso> accesos;
 	
+	@PostConstruct
+	public void inicializar() {
+		username="admin";
+	}
+	
 	/**
 	 * Iniciar sesion
 	 */

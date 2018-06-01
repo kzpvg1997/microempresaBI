@@ -2,6 +2,7 @@ package co.edu.eam.ingesoft.microempresa.negocio.persistencia;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -12,8 +13,12 @@ import javax.persistence.Query;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
+import co.edu.ingesoft.microempresa.persistencia.entidades.Inventario;
+import co.edu.ingesoft.microempresa.persistencia.entidades.InventarioProducto;
 import co.edu.ingesoft.microempresa.persistencia.entidades.Persona;
+import co.edu.ingesoft.microempresa.persistencia.entidades.Producto;
 import excepciones.ExcepcionFuncional;
+import excepciones.ExcepcionNegocio;
 
 
 
@@ -168,6 +173,36 @@ public class Persistencia  implements Serializable{
 	}
 	
 	/**
+	 * Listar objetos usando parametros
+	 * @param sql consulta a ejecutar, nos traera objetos de una determinada tabla
+	 * @parametros los parametros necesarios para la consulta
+	 * @return lista de los objetos encontrados
+	 */
+	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+	public List<Object> listarByParametros(String sql, Object[] parametros){
+		switch (this.bd) {
+		case 1:
+			Query q = emO.createNamedQuery(sql);
+			for (int i = 0; i < parametros.length; i++) {
+				q.setParameter(i+1, parametros[i]);
+				System.out.println("-------------- PARAMETRO "+i+" --------------");
+			}
+			return q.getResultList();
+		case 2:
+			Query p = emP.createNamedQuery(sql);
+			for (int i = 0; i < parametros.length; i++) {
+				p.setParameter(i+1, parametros[i]);
+				System.out.println("-------------- PARAMETRO "+i+" --------------");
+			}
+			return p.getResultList();
+		default:
+			throw new excepciones.ExcepcionFuncional("La base de datos #"+this.bd+" no existe.");
+		}
+	}
+	
+	
+	
+	/**
 	 * Listar objetos usando un parametro
 	 * @param sql consulta a ejecutar, nos traera objetos de una determinada tabla
 	 * @parametro el parametro necesario para la consulta
@@ -228,6 +263,55 @@ public class Persistencia  implements Serializable{
 			}
 	}
 	
+	/**
+	 * Consulta nativa encargada de registrar un producto a un inventario
+	 * @param invenProduc el enventario/producto al que se va asignar 
+	 * @throws ExcepcionNegocio en caso de error con la base de datos
+	 */
+	public void asignarProductoAInventario(InventarioProducto invenProduc)throws ExcepcionNegocio{
+		String sql = "INSERT INTO Inventario_Producto (inventario,producto,empleado,fecha_ingreso,cantidad) "
+				+ "VALUES (?1,?2,?3,?4,?5)";
+		Query q;
+		
+		switch (this.bd) {
+		case 1:
+			q =emO.createNativeQuery(sql);
+			break;
+		case 2: 
+			q =emO.createNativeQuery(sql);
+			break;
+		default:
+			throw new excepciones.ExcepcionFuncional("La base de datos #"+this.bd+" no existe.");
+		}
+		
+		q.setParameter(1, invenProduc.getInventario().getCodigo());
+		q.setParameter(2, invenProduc.getProducto().getCodigo());
+		q.setParameter(3, invenProduc.getPersonaEmpleado().getCodigo());
+		q.setParameter(4, invenProduc.getFechaIngreso());
+		q.setParameter(5, invenProduc.getCantidad());
+		q.executeUpdate();
+	}
+	
+	public void eliminarProductoInventario (InventarioProducto invenProduc) throws ExcepcionNegocio{
+		
+		String sql = "DELETE FROM Inventario_Producto WHERE inventario=?1 AND producto=?2";
+		Query q;
+		
+		switch (this.bd) {
+		case 1:
+			q =emO.createNativeQuery(sql);
+			break;
+		case 2: 
+			q =emO.createNativeQuery(sql);
+			break;
+		default:
+			throw new excepciones.ExcepcionFuncional("La base de datos #"+this.bd+" no existe.");
+		}
+		
+		q.setParameter(1, invenProduc.getInventario().getCodigo());
+		q.setParameter(2, invenProduc.getProducto().getCodigo());;
+		q.executeUpdate();
+	}
 
 	/**
 	 * Accesores Y Modificadores

@@ -27,11 +27,13 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name="Ventas")
 @NamedQueries({
-	@NamedQuery(name=Venta.todo,query="SELECT v FROM Venta v")
+	@NamedQuery(name=Venta.todo,query="SELECT v FROM Venta v"),
+	@NamedQuery(name=Venta.ByFechas,query="SELECT v FROM Venta v WHERE v.fachaVenta BETWEEN ?1 AND ?2")
 })
 public class Venta implements Serializable{
 
 	public static final String todo = "Venta.todo";
+	public static final String ByFechas = "Venta.ByFechas";
 	
 	@Id
 	@Column(name="codigo")

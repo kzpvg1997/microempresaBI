@@ -60,18 +60,18 @@ public class ClienteDW implements  Serializable{
 	@Column(name="genero",nullable=false)
 	private String genero;
 	
-	@Column(name="fecha_nacimiento",nullable=false)
+	@Column(name="fecha_nacimiento")
 	@Temporal(TemporalType.DATE)
 	private Date fechaNacimiento;
 	
-	@Column(name="fecha_ingreso",nullable=true)
+	@Column(name="fecha_ingreso")
 	@Temporal(TemporalType.DATE)
 	private Date fechaIngreso;
 	
 	@Column(name="salario")
 	private double salario;
 	
-	@Column(name="rol",nullable=false)
+	@Column(name="rol")
 	private String rol;
 	
 	@Column(name="municipio",nullable=false)
@@ -80,9 +80,11 @@ public class ClienteDW implements  Serializable{
 	@Column(name="departamento",nullable=false)
 	private String departamento;
 	
-	@Column(name="area_empresa",nullable=false)
+	@Column(name="area_empresa")
 	private String areaEmpresa;
 	
+	@Column(name="edad")
+	private int edad;
 	
 	public ClienteDW (){
 		
@@ -189,6 +191,20 @@ public class ClienteDW implements  Serializable{
 	 */
 	public void setDepartamento(String departamento) {
 		this.departamento = departamento;
+	}
+
+	/**
+	 * @return the edad
+	 */
+	public int getEdad() {
+		return edad;
+	}
+
+	/**
+	 * @param edad the edad to set
+	 */
+	public void setEdad(int edad) {
+		this.edad = edad;
 	}
 	
 }

@@ -205,7 +205,7 @@ public class GestionAreaEmpresaController implements Serializable{
 	public void auditoria(String nombre, String accion){
 		AreasEmpresa b = areaEmpresaEJB.buscarByNombre(nombre, sesion.getBd());
 		Date fecha = new Date();
-		String origen = "PC";
+		String origen = "Celular";
 		String navegador = "Mozilla";
 		Auditoria auditoria = new Auditoria();
 		auditoria.setTabla("Areas_Empresa");

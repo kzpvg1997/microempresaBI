@@ -23,7 +23,7 @@ import javax.persistence.TemporalType;
  * Persona Data WereHouse
  * 
  * Reglas de Negocio:
- * 1. se elimina la relacion a usuario, ya que pues no interesa para los reportes (Optimizar)
+ * 1. se elimina la relacion a usuario y se unifico con persona
  * 2. se deja el atributo cedula, para poder generar reportes por persona (Reporting)
  *    2.1 - Se valida que la cedula solo sean numeros, en caso de que no sean numeros se omite.
  * 3. se eliminan los atributos nombre, apellido y telefono por que se consideran inecesarios para los reportes (Optimizar)
@@ -37,25 +37,28 @@ import javax.persistence.TemporalType;
  * 10. se valida que el salario no sea negativo, en caso de ser negativo. se deja el valor promedio.
  */
 @Entity
-@Table(name="Empleados_DW")
+@Table(name="Usuarios_DW")
 @NamedQueries({
-	@NamedQuery(name=EmpleadoDW.byCedula,query="SELECT e FROM EmpleadoDW e WHERE e.cedula=?1")
+	@NamedQuery(name=UsuarioDW.byCedula,query="SELECT u FROM UsuarioDW u WHERE u.cedula=?1")
 })
-public class EmpleadoDW implements  Serializable{
+public class UsuarioDW implements  Serializable{
 	
-	public static final String byCedula = "EmpleadoDW.byCedula";
+	public static final String byCedula = "UsuarioDW.byCedula";
 	
 	/**
 	 * Por optimizacion, el id es auto incrementable y de valor numerico
 	 */
 	@Id
 	@Column(name="codigo")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EMPLEADO_DW_SEQ")
-    @SequenceGenerator(sequenceName = "empleado_dw_seq", allocationSize = 1, name = "EMPLEADO_DW_SEQ")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USUARIO_DW_SEQ")
+    @SequenceGenerator(sequenceName = "usuario_dw_seq", allocationSize = 1, name = "USUARIO_DW_SEQ")
 	private int codigo;
 	
-	@Column(name="cedula",nullable=false)
+	@Column(name="cedula",nullable=false,unique=true)
 	private String cedula;
+	
+	@Column(name="usuario",nullable=false)
+	private String usuario;
 	
 	@Column(name="genero",nullable=false)
 	private String genero;
@@ -64,29 +67,19 @@ public class EmpleadoDW implements  Serializable{
 	@Temporal(TemporalType.DATE)
 	private Date fechaNacimiento;
 	
-	@Column(name="fecha_ingreso",nullable=true)
-	@Temporal(TemporalType.DATE)
-	private Date fechaIngreso;
-	
-	@Column(name="salario")
-	private double salario;
-	
 	@Column(name="rol",nullable=false)
 	private String rol;
 	
 	@Column(name="municipio",nullable=false)
 	private String municipio;
-	
+
 	@Column(name="departamento",nullable=false)
 	private String departamento;
-	
-	@Column(name="area_empresa",nullable=false)
-	private String areaEmpresa;
 	
 	@Column(name="edad")
 	private int edad;
 	
-	public EmpleadoDW (){
+	public UsuarioDW (){
 		
 	}
 
@@ -129,27 +122,6 @@ public class EmpleadoDW implements  Serializable{
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
-
-	public Date getFechaIngreso() {
-		return fechaIngreso;
-	}
-
-
-	public void setFechaIngreso(Date fechaIngreso) {
-		this.fechaIngreso = fechaIngreso;
-	}
-
-
-	public double getSalario() {
-		return salario;
-	}
-
-
-	public void setSalario(double salario) {
-		this.salario = salario;
-	}
-
-
 	public String getRol() {
 		return rol;
 	}
@@ -169,14 +141,18 @@ public class EmpleadoDW implements  Serializable{
 		this.municipio = municipio;
 	}
 
-
-	public String getAreaEmpresa() {
-		return areaEmpresa;
+	/**
+	 * @return the usuario
+	 */
+	public String getUsuario() {
+		return usuario;
 	}
 
-
-	public void setAreaEmpresa(String areaEmpresa) {
-		this.areaEmpresa = areaEmpresa;
+	/**
+	 * @param usuario the usuario to set
+	 */
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 
 	/**
@@ -206,5 +182,4 @@ public class EmpleadoDW implements  Serializable{
 	public void setEdad(int edad) {
 		this.edad = edad;
 	}
-	
 }

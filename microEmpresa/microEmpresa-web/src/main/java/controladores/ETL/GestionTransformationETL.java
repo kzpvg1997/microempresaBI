@@ -18,6 +18,7 @@ import co.edu.eam.ingesoft.microempresa.negocio.beansDW.TransformationETL;
 import co.edu.ingesoft.microempresa.persistencia.datawarehouse.AuditoriaDW;
 import co.edu.ingesoft.microempresa.persistencia.datawarehouse.ClienteDW;
 import co.edu.ingesoft.microempresa.persistencia.datawarehouse.EmpleadoDW;
+import co.edu.ingesoft.microempresa.persistencia.datawarehouse.UsuarioDW;
 import co.edu.ingesoft.microempresa.persistencia.datawarehouse.VentaDW;
 import co.edu.ingesoft.microempresa.persistencia.entidades.Auditoria;
 import co.edu.ingesoft.microempresa.persistencia.entidades.Persona;
@@ -58,6 +59,8 @@ public class GestionTransformationETL implements Serializable{
 	
 	private List<Auditoria> auditoriaETL;
 	
+	private List<UsuarioDW> usuariosAuditoria;
+	
 	@PostConstruct
 	public void inicializar(){
 		listar();
@@ -77,6 +80,7 @@ public class GestionTransformationETL implements Serializable{
 			}else{
 				if(!auditorias.isEmpty()){
 					auditoriasDW = transformationETL.auditoriaDW(auditorias);
+					usuariosAuditoria = transformationETL.usuariosAuditoriaDW(auditoriasDW);
 				}
 				if(!ventas.isEmpty()){
 					ventasDW = transformationETL.ventaDW(ventas);
@@ -178,5 +182,19 @@ public class GestionTransformationETL implements Serializable{
 	 */
 	public void setAuditoriaETL(List<Auditoria> auditoriaETL) {
 		this.auditoriaETL = auditoriaETL;
+	}
+
+	/**
+	 * @return the usuariosAuditoria
+	 */
+	public List<UsuarioDW> getUsuariosAuditoria() {
+		return usuariosAuditoria;
+	}
+
+	/**
+	 * @param usuariosAuditoria the usuariosAuditoria to set
+	 */
+	public void setUsuariosAuditoria(List<UsuarioDW> usuariosAuditoria) {
+		this.usuariosAuditoria = usuariosAuditoria;
 	}
 }

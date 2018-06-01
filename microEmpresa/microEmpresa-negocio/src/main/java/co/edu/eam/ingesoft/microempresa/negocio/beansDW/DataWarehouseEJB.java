@@ -13,8 +13,10 @@ import co.edu.ingesoft.microempresa.persistencia.datawarehouse.ClienteDW;
 import co.edu.ingesoft.microempresa.persistencia.datawarehouse.EmpleadoDW;
 import co.edu.ingesoft.microempresa.persistencia.datawarehouse.UsuarioDW;
 import co.edu.ingesoft.microempresa.persistencia.datawarehouse.VentaDW;
+import co.edu.ingesoft.microempresa.persistencia.entidades.ReporteDW;
 import co.edu.ingesoft.microempresa.persistencia.entidades.Rol;
 import co.edu.ingesoft.microempresa.persistencia.entidades.Usuario;
+import excepciones.ExcepcionNegocio;
 
 /**
  * EJB que se encargara de todas las operaciones al data warehouse 
@@ -84,12 +86,13 @@ public class DataWarehouseEJB {
 	 * Elimina todos los registros de las tablas del data warehouse
 	 */
 	public void removeAllDW(){
-		String[] tablas = {"Auditoria_DW","Clientes_DW","Empleados_DW","Ventas_DW","Usuarios_DW"};
+		String[] tablas = {"Auditoria_DW","Ventas_DW","Clientes_DW","Empleados_DW","Usuarios_DW"};
 		for (int i = 0; i < tablas.length; i++) {
-			Query q = emM.createNativeQuery("DELETE FROM "+tablas[i]);
+			Query q = emM.createNativeQuery("DELETE FROM "+tablas[i]+"");
 			q.executeUpdate();
 		}
 	}
+	
 	
 	/**
 	 * Buscar persona por cedula
@@ -104,4 +107,55 @@ public class DataWarehouseEJB {
 			return null;
 		}
 	}
+	
+
+	/**
+	 * Metodo que registra las ventas del Data Wherehouse
+	 * @return lista de ventas del DW
+	 */
+	public List<VentaDW> listarVentasDW (){
+		Query q = emM.createNamedQuery(VentaDW.listarVentasDW);
+		List<VentaDW> lista = q.getResultList();
+		return lista;
+	}
+	
+	/**
+	 * Netodo que lista las auditorias del Data Wherehouse
+	 * @return lista de auditorias del DW
+	 */
+	public List<AuditoriaDW> listarAruditoriasDW(){
+		Query q = emM.createNamedQuery(AuditoriaDW.listarAuditoriasDW);
+		List<AuditoriaDW> lista = q.getResultList();
+		return lista;
+	}
+	
+	/**
+	 * Metodo que lista los reportes del DW
+	 * @return reporte DW
+	 */
+	public List<ReporteDW> listarReportesDW(int codigoUsuario){
+		Query q = emM.createNamedQuery(ReporteDW.listarReportesDWXUsuario);
+		q.setParameter(1, codigoUsuario);
+		List<ReporteDW> lista = q.getResultList();
+		return lista;
+	}
+	
+	public void generarReporteDW(ReporteDW reporte)throws ExcepcionNegocio{
+		ReporteDW rep = buscarReporteDW(reporte.getNombreReporte());
+		if(rep!=null){
+			emM.persist(reporte);
+		}else{
+			throw new ExcepcionNegocio("El reporte :"+reporte.getNombreReporte()+" ya fue realizado");
+		}
+	}
+	
+	public ReporteDW buscarReporteDW(String nombre){
+		List<ReporteDW> lista = (List<ReporteDW>) emM.createNamedQuery(ReporteDW.BuscarByNombre);
+		if(lista.size()>0){
+			return lista.get(0);
+		}else{
+			return null;
+		}
+	}
+	
 }

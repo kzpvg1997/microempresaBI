@@ -63,7 +63,27 @@
 					<f:selectItem itemValue="1" itemLabel="Acumulacion Simple" />
 					<f:selectItem itemValue="2" itemLabel="Rolling" />
 				</h:selectOneMenu>
-				<p:commandButton id="btregis"  ajax="false" value="Iniciar proceso ETL"  action="/paginas/seguro/etl/Extraction.xhtml?faces-redirect=true" class="register"/>
+				<p:message for="tftipocarga" />
+				
+				<h:outputLabel for="tfFechaInicio" value="Fecha Inicio" />
+					<h:inputText id="tfFechaInicio"
+						value="#{extractionETL.fechaInicio}" mode="inline" class="form-control">
+						<f:convertDateTime pattern="dd-MM-yyyy" />
+					</h:inputText>
+				<p:message for="tfFechaInicio" />
+
+				<h:outputLabel for="tfFechaFin" value="Fecha Fin" />
+					<h:inputText id="tfFechaFin" 
+						value="#{extractionETL.fechaFin}" mode="inline" class="form-control">
+						<f:convertDateTime pattern="dd-MM-yyyy" />
+			    	</h:inputText>
+				<p:message for="tfFechaFin" />
+					
+			</h:panelGrid>
+			
+			<h:panelGrid columns="1">	
+				<p:commandButton id="btregis"  ajax="false" value="Iniciar proceso ETL"  
+				action="/paginas/seguro/etl/Extraction.xhtml?faces-redirect=true" class="register"/>
 			</h:panelGrid>
 			
 				<p:accordionPanel id="panelTablaEmpa" >

@@ -1,0 +1,198 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	
+	 template="/template/template.xhtml">
+
+	<ui:define name="cuerpo">
+		<h:form prependId="false">
+           
+            <p:tabView id="tablaDeExport" style="margin-top:100px">
+					<p:tab title="Exportarcion de Ventas" dynamic="true" cache="true">
+					
+            <p:outputLabel  id="ExportVenExc" value="Exportar a Excel:" style="margin-top:-10px"/>
+            <h:commandButton action="#{ExportarVentasDW.auditoriaExcelVentasDW()}"
+             image="/img/iconoExcel.png" style="width:45px;height:45px;margin-left:15px;margin-top:10px">
+                <p:dataExporter type="xls" target="tablaExportVentas" fileName="VentasDW-excel" />  
+          </h:commandButton> 
+            
+            <p:outputLabel  id="ExportVenCSV" value="Exportar a CSV:" style="margin-left:35px;margin-top:-10px"/>
+             <h:commandButton action="#{ExportarVentasDW.auditoriaCSVVentasDW()}"
+             image="/img/iconoCSV.jpeg" style="width:35px;height:35px;margin-left:15px">
+                <p:dataExporter type="csv" target="tablaExportVentas" fileName="VentasDW-CSV" />
+            </h:commandButton>
+            
+		<p:dataTable id="tablaExportVentas" var="ven" value="#{ExportarVentasDW.listaVentasDW}"
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                 paginator="true" rows="10" style="margin-bottom:20px" >
+ 		
+ 
+        <p:column width="80px">
+            <f:facet name="header">
+                <h:outputText value="Codigo Venta" />
+            </f:facet>
+            <h:outputText value="#{ven.codigo}" />
+        </p:column>
+ 
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Fecha Venta"/>
+            </f:facet>
+            <h:outputText value="#{ven.fachaVenta}" />
+        </p:column>
+ 
+        <p:column width="80px">
+            <f:facet name="header">
+                <h:outputText value="Cod.Cliente" />
+            </f:facet>
+            <h:outputText value="#{ven.personaCliente.codigo}" />
+        </p:column>
+ 
+        <p:column width="80px">
+            <f:facet name="header">
+                <h:outputText value="Cod.Empleado" />
+            </f:facet>
+            <h:outputText value="#{ven.personaEmpleado.codigo}" />
+        </p:column>
+        
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Total Venta" />
+            </f:facet>
+            <h:outputText value="#{ven.valorTotal}" />
+        </p:column>
+        
+         <p:column>
+            <f:facet name="header">
+                <h:outputText value="Departamento Cliente" />
+            </f:facet>
+            <h:outputText value="#{ven.personaCliente.departamento}" />
+        </p:column>
+        
+         <p:column>
+            <f:facet name="header">
+                <h:outputText value="Genero Cliente" />
+            </f:facet>
+            <h:outputText value="#{ven.personaCliente.genero}" />
+        </p:column>
+        
+         <p:column>
+            <f:facet name="header">
+                <h:outputText value="Municipio Cliente" />
+            </f:facet>
+            <h:outputText value="#{ven.personaCliente.municipio}" />
+        </p:column>
+    </p:dataTable>
+    	
+    	</p:tab>
+    	
+    	<!-- 2da Tab donde se visualizan las auditorias -->
+    	
+    	<p:tab title="Exportarcion de Auditoaias" dynamic="true" cache="true">
+					
+            <p:outputLabel  id="ExportAudExc" value="Exportar a Excel:" style="margin-top:-10px"/>
+            <h:commandButton action="#{ExportarVentasDW.auditoriaExcelAuditoriasDW()}"
+             image="/img/iconoExcel.png" style="width:45px;height:45px;margin-left:15px;margin-top:10px">
+                <p:dataExporter type="xls" target="tablaExportAuditorias" fileName="AuditoriasDW-excel" />  
+          </h:commandButton> 
+            
+            <p:outputLabel  id="ExportAudCSV" value="Exportar a CSV:" style="margin-left:35px;margin-top:-10px"/>
+             <h:commandButton action="#{ExportarVentasDW.auditoriaCSVAuditoriasDW()}"
+             image="/img/iconoCSV.jpeg" style="width:35px;height:35px;margin-left:15px">
+                <p:dataExporter type="csv" target="tablaExportAuditorias" fileName="AuditoriasDW-CSV" />
+            </h:commandButton>
+            
+		<p:dataTable id="tablaExportAuditorias" var="au" value="#{ExportarVentasDW.listaAuditoriasDW}" scrollable="true"
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
+                 paginator="true" rows="10" style="margin-bottom:20px" >
+ 		
+ 
+        <p:column width="80px">
+            <f:facet name="header">
+                <h:outputText value="Codigo Auditoria" />
+            </f:facet>
+            <h:outputText value="#{au.id}" />
+        </p:column>
+ 
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Fecha Auditoria"/>
+            </f:facet>
+            <h:outputText value="#{au.fecha}" />
+        </p:column>
+ 
+        <p:column width="50px">
+            <f:facet name="header">
+                <h:outputText value="Codigo Usuario" />
+            </f:facet>
+            <h:outputText value="#{au.usuario.codigo}" />
+        </p:column>
+ 
+ 		<p:column>
+            <f:facet name="header">
+                <h:outputText value="Depto Usuario" />
+            </f:facet>
+            <h:outputText value="#{au.usuario.departamento}" />
+        </p:column>
+        
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Municipio Usuario" />
+            </f:facet>
+            <h:outputText value="#{au.usuario.municipio}" />
+        </p:column>
+        
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Rol Usuario" />
+            </f:facet>
+            <h:outputText value="#{au.usuario.rol}" />
+        </p:column>
+ 	
+ 		<p:column width="50px">
+            <f:facet name="header">
+                <h:outputText value="Edad Usuario" />
+            </f:facet>
+            <h:outputText value="#{au.usuario.edad}" />
+        </p:column>
+ 
+        <p:column >
+            <f:facet name="header">
+                <h:outputText value="Accion" />
+            </f:facet>
+            <h:outputText value="#{au.accion}" />
+        </p:column>
+        
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Tabla Accion" />
+            </f:facet>
+            <h:outputText value="#{au.tabla}" />
+        </p:column>
+        
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Navegador" />
+            </f:facet>
+            <h:outputText value="#{au.navegador}" />
+        </p:column>
+        
+        <p:column width="80px">
+            <f:facet name="header">
+                <h:outputText value="Origen" />
+            </f:facet>
+            <h:outputText value="#{au.origen}" />
+        </p:column>
+        
+        
+    </p:dataTable>
+    	
+    	</p:tab>
+    	</p:tabView>
+    
+		</h:form>
+	</ui:define>
+
+</ui:composition>

@@ -5,9 +5,9 @@
 	xmlns:p="http://primefaces.org/ui" template="/template/template.xhtml">
 
 	<ui:define name="cuerpo">
-		<h:form prependId="false" id="gestion">
+		<h:form prependId="false">
 		
-		<p:tabView id="tablaDatosEmpresa" style="margin-top:100px">
+		<p:tabView id="tablaDatosGesProd" style="margin-top:100px">
 			<p:tab title="Asignar Producto" dynamic="true" cache="true" id="tabdata">
 
 			<p:fieldset legend="Selseccione Inventario..." style="margin-top:10px">
@@ -17,7 +17,7 @@
 				<h:selectOneMenu id="inventario" value="#{AsignarProductoController.inventarioSeleccionado}">
 					<f:selectItems value="#{AsignarProductoController.listaInventarios}"
 					 var="inv" itemValue="#{inv.codigo}" itemLabel="#{inv.codigo} de: #{inv.empresa}"/>
-					<f:ajax event="change" execute="@this" render="panelTablaProdXInv"
+					<f:ajax event="change" execute="@this inventario" render="panelTablaProdXInv"
 					listener="#{AsignarProductoController.productoByInventario()}"/>
 				</h:selectOneMenu>
 				
@@ -30,11 +30,11 @@
 		
 			
 			<p:accordionPanel id="panelTablaEmp"  style="margin-top:15px">
-				<p:tab title="Productos Registrados">
+				<p:tab title="Productos Registrados" id="prodReg" >
 				<div style="overflow: auto; border: 1px solid #ccc; height: 260px">
-					<p:dataTable value="#{AsignarProductoController.listaProductos}" id="tablaEmp"
-						var="p" border="1" binding="#{AsignarProductoController.tabla}">
-						<p:column>
+					<p:dataTable value="#{AsignarProductoController.listaProductos}" 
+					 id="tablaEmp"	var="p" border="1" binding="#{AsignarProductoController.tabla}">
+						<p:column style="width:100px">
 							<f:facet name="header">
 							Codigo
 						</f:facet>
@@ -58,21 +58,21 @@
 						</f:facet>
 							<p:outputLabel value="#{p.tipoProducto.nombre}" />
 						</p:column>
-						<p:column id="cant">
-							<f:facet name="header">
+						<p:column id="tfCant">
+						<f:facet name="header" >
 							Ingrese Cantidad
 						</f:facet>
-							<p:spinner name="cantidad" id="tfCant"  stepFactor="5" class="form-control" 
-							 value="#{AsignarProductoController.cantidad}"   placeholder="Ingrese"/>
+							<p:inputNumber id="cant"  style="width:100px"
+							 value="#{AsignarProductoController.cantidad}" />
 						</p:column>
 						<p:column>
 						<f:facet name="header">
 							Opciones
-						</f:facet>
-							<p:commandButton
-							action="#{AsignarProductoController.asignarProducto(p)}"
-							value="Asignar"  process="@this tablaDatosEmpresa" 
-							 update="tablaDatosEmpresa" class="registrar"/>
+							</f:facet>
+								<p:commandButton
+								action="#{AsignarProductoController.asignarProducto(p)}"
+								value="Asignar"  process="@this :tablaDatosGesProd:busInv" 
+						 update=":tablaDatosGesProd:AsignarProd" class="registrar"/>
 								</p:column>
 					</p:dataTable>
 					</div>
@@ -82,7 +82,7 @@
 			<!-- 2do panel (( TABLA DE PRODUCTOS POR INVENTARIO )) -->
 			
 			<p:accordionPanel id="panelTablaProdXInv"  style="margin-top:15px">
-				<p:tab title="Productos del Inventario">
+				<p:tab title="Productos del Inventario" id="proxInvent">
 				<div style="overflow: auto; border: 1px solid #ccc; height: 260px">
 					<p:dataTable value="#{AsignarProductoController.productosXInventarios}" id="tablaProdXInv"
 						var="pi" border="1">
@@ -115,10 +115,10 @@
 							Opciones
 						</f:facet>
 							<p:commandButton
-							action="#{AsignarProductoController.quitarProducto(pi.producto)}"
+							action="#{AsignarProductoController.quitarProducto(pi)}"
 							value="Quitar"
-								process="@this tablaDatosEmpresa"
-								update="tablaDatosEmpresa" class="eliminar"/>
+								process="@this tablaDatosGesProd"
+								update="tablaProdXInv" class="eliminar"/>
 								</p:column>
 					</p:dataTable>
 					</div>

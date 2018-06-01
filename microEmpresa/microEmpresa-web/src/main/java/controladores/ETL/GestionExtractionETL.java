@@ -16,6 +16,7 @@ import co.edu.eam.ingesoft.microempresa.negocio.beans.AuditoriaEJB;
 import co.edu.eam.ingesoft.microempresa.negocio.beansDW.ExtractionETL;
 import co.edu.ingesoft.microempresa.persistencia.entidades.Auditoria;
 import co.edu.ingesoft.microempresa.persistencia.entidades.Persona;
+import co.edu.ingesoft.microempresa.persistencia.entidades.Usuario;
 import co.edu.ingesoft.microempresa.persistencia.entidades.Venta;
 import session.SessionController;
 
@@ -38,9 +39,15 @@ public class GestionExtractionETL implements Serializable{
 	
 	public static List<Auditoria> auditorias;
 	
+	private List<Usuario> usuarios;
+	
 	public static List<Venta> ventas;
 	
 	public static int tipoCargaDatos;
+	
+	public static Date fechaInicio;
+	
+	public static Date fechaFin;
 	
 	@PostConstruct
 	public void inicializar(){
@@ -53,8 +60,33 @@ public class GestionExtractionETL implements Serializable{
 	 */
 	public void listar(){
 		try{
-			auditorias = (List<Auditoria>)(Object)extractionETL.extraerAll(Auditoria.todo);
-			ventas = (List<Venta>)(Object)extractionETL.extraerAll(Venta.todo);
+			// Formamos el vector de objects para pasar como parametros al metodo
+			Object[] parametros = new Object[2];
+			parametros[0] = fechaInicio;
+			parametros[1] = fechaFin;
+			
+			switch (tipoCargaDatos) {
+			case 1:
+				System.out.println("-------------- ENTRO A ACUMULACION SIMPLE --------------");
+				System.out.println(fechaInicio+"   ------------  "+fechaFin);
+				// Acumulacion simple
+//				auditorias = (List<Auditoria>)(Object)extractionETL.extraerAllByFechas(Auditoria.ByFechas, parametros);
+//				ventas = (List<Venta>)(Object)extractionETL.extraerAllByFechas(Venta.ByFechas, parametros);
+				auditorias = (List<Auditoria>)(Object)extractionETL.auditoriaFecha(fechaInicio, fechaFin);
+				ventas = (List<Venta>)(Object)extractionETL.ventaFecha(fechaInicio, fechaFin);
+				usuarios = extractionETL.usuariosAuditoria(auditorias);
+				break;
+			case 2:
+				// Rolling
+				auditorias = (List<Auditoria>)(Object)extractionETL.extraerAll(Auditoria.todo);
+				usuarios = extractionETL.usuariosAuditoria(auditorias);
+				ventas = (List<Venta>)(Object)extractionETL.extraerAll(Venta.todo);
+				System.out.println("------------ VENTAS ---- "+ventas.size());
+				
+				break;
+			default:
+				break;
+			}
 		}catch (excepciones.ExcepcionFuncional e) {
 			Messages.addFlashGlobalInfo(e.getMessage());
 		}catch(Exception e){
@@ -67,7 +99,7 @@ public class GestionExtractionETL implements Serializable{
 	 */
 	public void auditoria(String accion){
 		Date fecha = new Date();
-		String origen = "PC";
+		String origen = "Celular";
 		String navegador = "Google chrome";
 		Auditoria auditoria = new Auditoria();
 		auditoria.setTabla("ETL");
@@ -108,6 +140,48 @@ public class GestionExtractionETL implements Serializable{
 	 */
 	public void setTipoCargaDatos(int tipoCargaDatos) {
 		GestionExtractionETL.tipoCargaDatos = tipoCargaDatos;
+	}
+
+	/**
+	 * @return the fechaInicio
+	 */
+	public Date getFechaInicio() {
+		return fechaInicio;
+	}
+
+	/**
+	 * @param fechaInicio the fechaInicio to set
+	 */
+	public void setFechaInicio(Date fechaInicio) {
+		GestionExtractionETL.fechaInicio = fechaInicio;
+	}
+
+	/**
+	 * @return the fechaFin
+	 */
+	public Date getFechaFin() {
+		return fechaFin;
+	}
+
+	/**
+	 * @param fechaFin the fechaFin to set
+	 */
+	public void setFechaFin(Date fechaFin) {
+		GestionExtractionETL.fechaFin = fechaFin;
+	}
+
+	/**
+	 * @return the usuarios
+	 */
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	/**
+	 * @param usuarios the usuarios to set
+	 */
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}
 	
 }

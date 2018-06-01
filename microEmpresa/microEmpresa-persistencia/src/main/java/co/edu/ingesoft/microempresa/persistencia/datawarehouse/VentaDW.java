@@ -14,10 +14,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import co.edu.ingesoft.microempresa.persistencia.entidades.Rol;
 
 /**
  * TABLA DE HECHO VENTAS
@@ -29,8 +33,14 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="Ventas_DW")
+@NamedQueries({
+	@NamedQuery(name=VentaDW.listarVentasDW,query="SELECT vdw FROM VentaDW vdw")
+})
 public class VentaDW implements Serializable{
 
+	public static final String listarVentasDW = "VentasDW.listarVentas";
+
+	
 	/**
 	 * Por optimizacion, el id es auto incrementable y de valor numerico
 	 */
@@ -57,14 +67,14 @@ public class VentaDW implements Serializable{
 	 * El empleado que realizo la venta
 	 */
 	@ManyToOne(cascade={CascadeType.ALL})
-	@JoinColumn(name="empleado",nullable=false)
+	@JoinColumn(name="empleado",nullable=true)
 	private EmpleadoDW personaEmpleado;
 	
 	/**
 	 * El cliente que ralizo la compra
 	 */
 	@ManyToOne(cascade={CascadeType.ALL})
-	@JoinColumn(name="cliente",nullable=false)
+	@JoinColumn(name="cliente",nullable=true)
 	private ClienteDW personaCliente;
 	
 	public VentaDW(){

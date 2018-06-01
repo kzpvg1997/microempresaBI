@@ -77,21 +77,21 @@
 					</p:tab>
 					
 					<p:tab title="Registros de usuarios"  rendered="#{extractionETL.auditorias.size() > 0}">
-						<p:dataTable value="#{extractionETL.auditorias}" id="tablausers"
+						<p:dataTable value="#{extractionETL.usuarios}" id="tablausers"
 							var="u" border="1">
 							
 							<p:column>
 								<f:facet name="header">
 								codigo
 							    </f:facet>
-								<p:outputLabel value="#{u.usuario.codigo}" />
+								<p:outputLabel value="#{u.codigo}" />
 							</p:column>
 							
 							<p:column>
 								<f:facet name="header">
 								username
 							    </f:facet>
-								<p:outputLabel value="#{u.usuario.username}" />
+								<p:outputLabel value="#{u.username}" />
 							</p:column>
 							
 							<p:column>
@@ -105,105 +105,105 @@
 								<f:facet name="header">
 								estado
 							    </f:facet>
-								<p:outputLabel value="#{u.usuario.estado}" />
+								<p:outputLabel value="#{u.estado}" />
 							</p:column>
 							
 							<p:column>
 								<f:facet name="header">
 								persona
 							    </f:facet>
-								<p:outputLabel value="#{u.usuario.persona.codigo}" />
+								<p:outputLabel value="#{u.persona.codigo}" />
 							</p:column>
 													
 						</p:dataTable>
 					</p:tab>
 
 					<p:tab title="Registros de personas usuarios"  rendered="#{extractionETL.auditorias.size() > 0}">
-						<p:dataTable value="#{extractionETL.auditorias}" id="tablapersonasusers"
+						<p:dataTable value="#{extractionETL.usuarios}" id="tablapersonasusers"
 							var="u" border="1">
 							
 							<p:column>
 								<f:facet name="header">
 								codigo
 							    </f:facet>
-								<p:outputLabel value="#{u.usuario.persona.codigo}" />
+								<p:outputLabel value="#{u.persona.codigo}" />
 							</p:column>
 							
 							<p:column>
 								<f:facet name="header">
 								cedula
 							    </f:facet>
-								<p:outputLabel value="#{u.usuario.persona.cedula}" />
+								<p:outputLabel value="#{u.persona.cedula}" />
 							</p:column>
 							
 							<p:column>
 								<f:facet name="header">
 								nombre
 							    </f:facet>
-								<p:outputLabel value="#{u.usuario.persona.nombre}" />
+								<p:outputLabel value="#{u.persona.nombre}" />
 							</p:column>
 							
 							<p:column>
 								<f:facet name="header">
 								apellido
 							    </f:facet>
-								<p:outputLabel value="#{u.usuario.persona.apellido}" />
+								<p:outputLabel value="#{u.persona.apellido}" />
 							</p:column>
 							
 							<p:column>
 								<f:facet name="header">
 								telefono
 							    </f:facet>
-								<p:outputLabel value="#{u.usuario.persona.telefono}" />
+								<p:outputLabel value="#{u.persona.telefono}" />
 							</p:column>
 							
 							<p:column>
 								<f:facet name="header">
 								genero
 							    </f:facet>
-								<p:outputLabel value="#{u.usuario.persona.genero.nombre}" />
+								<p:outputLabel value="#{u.persona.genero.nombre}" />
 							</p:column>
 							
 							<p:column>
 								<f:facet name="header">
 								fecha nacimiento
 							    </f:facet>
-								<p:outputLabel value="#{u.usuario.persona.fechaNacimiento}" />
+								<p:outputLabel value="#{u.persona.fechaNacimiento}" />
 							</p:column>
 							
 							<p:column>
 								<f:facet name="header">
 								fecha ingreso
 							    </f:facet>
-								<p:outputLabel value="#{u.usuario.persona.fechaIngreso}" />
+								<p:outputLabel value="#{u.persona.fechaIngreso}" />
 							</p:column>
 							
 							<p:column>
 								<f:facet name="header">
 								salario
 							    </f:facet>
-								<p:outputLabel value="#{u.usuario.persona.salario}" />
+								<p:outputLabel value="#{u.persona.salario}" />
 							</p:column>
 							
 							<p:column>
 								<f:facet name="header">
 								rol
 							    </f:facet>
-								<p:outputLabel value="#{u.usuario.persona.rol.nombre}" />
+								<p:outputLabel value="#{u.persona.rol.nombre}" />
 							</p:column>
 							
 							<p:column>
 								<f:facet name="header">
 								municipio
 							    </f:facet>
-								<p:outputLabel value="#{u.usuario.persona.municipio.nombre}" />
+								<p:outputLabel value="#{u.persona.municipio.nombre}" />
 							</p:column>
 							
 							<p:column>
 								<f:facet name="header">
 								area empresa
 							    </f:facet>
-								<p:outputLabel value="#{u.usuario.persona.areaEmpresa.nombre}" />
+								<p:outputLabel value="#{u.persona.areaEmpresa.nombre}" />
 							</p:column>
 													
 						</p:dataTable>

@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -28,7 +30,12 @@ import co.edu.ingesoft.microempresa.persistencia.entidades.Persona;
  */
 @Entity
 @Table(name="Auditoria_DW")
+@NamedQueries({
+	@NamedQuery(name=AuditoriaDW.listarAuditoriasDW,query="SELECT adw FROM AuditoriaDW adw")
+})
 public class AuditoriaDW implements Serializable{
+	
+	public static final String listarAuditoriasDW = "AuditoriaDW.listarAudtorias";
 	
 	/**
 	 * Por optimizacion, el id es auto incrementable y de valor numerico

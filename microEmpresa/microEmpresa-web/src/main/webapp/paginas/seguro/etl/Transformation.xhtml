@@ -70,56 +70,63 @@
 					</p:tab>
 					
 					<p:tab title="Usuarios" rendered="#{transformationETL.auditoriasDW.size() > 0}">
-						<p:dataTable value="#{transformationETL.auditoriasDW}" id="tablausuarios"
+						<p:dataTable value="#{transformationETL.usuariosAuditoria}" id="tablausuarios"
 							var="u" border="1">
 							
 							<p:column>
 								<f:facet name="header">
 								username
 							    </f:facet>
-								<p:outputLabel value="#{u.usuario.usuario}" />
+								<p:outputLabel value="#{u.usuario}" />
 							</p:column>
 							
 							<p:column>
 								<f:facet name="header">
 								cedula
 							    </f:facet>
-								<p:outputLabel value="#{u.usuario.cedula}" />
+								<p:outputLabel value="#{u.cedula}" />
 							</p:column>
 							
 							<p:column>
 								<f:facet name="header">
 								genero
 							    </f:facet>
-								<p:outputLabel value="#{u.usuario.genero}" />
+								<p:outputLabel value="#{u.genero}" />
 							</p:column>
 							
 							<p:column>
 								<f:facet name="header">
 								fecha nacimiento
 							    </f:facet>
-								<p:outputLabel value="#{u.usuario.fechaNacimiento}" />
+								<p:outputLabel value="#{u.fechaNacimiento}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								edad
+							    </f:facet>
+								<p:outputLabel value="#{u.edad}" />
 							</p:column>
 							
 							<p:column>
 								<f:facet name="header">
 								rol
 							    </f:facet>
-								<p:outputLabel value="#{u.usuario.rol}" />
+								<p:outputLabel value="#{u.rol}" />
 							</p:column>
 							
 							<p:column>
 								<f:facet name="header">
 								municipio
 							    </f:facet>
-								<p:outputLabel value="#{u.usuario.municipio}" />
+								<p:outputLabel value="#{u.municipio}" />
 							</p:column>
 							
 							<p:column>
 								<f:facet name="header">
 								departamento
 							    </f:facet>
-								<p:outputLabel value="#{u.usuario.departamento}" />
+								<p:outputLabel value="#{u.departamento}" />
 							</p:column>
 													
 						</p:dataTable>
@@ -145,23 +152,23 @@
 							
 							<p:column>
 								<f:facet name="header">
-								empresa
+								Area empresa
 							</f:facet>
-								<p:outputLabel value="#{v.empresa.codigo}" />
+								<p:outputLabel value="#{v.personaCliente.areaEmpresa}" />
 							</p:column>
 							
 							<p:column>
 								<f:facet name="header">
 								personaEmpleado
 							</f:facet>
-								<p:outputLabel value="#{v.personaEmpleado.codigo}" />
+								<p:outputLabel value="#{v.personaEmpleado.cedula}" />
 							</p:column>
 							
 							<p:column>
 								<f:facet name="header">
 								personaCliente
 							</f:facet>
-								<p:outputLabel value="#{v.personaCliente.codigo}" />
+								<p:outputLabel value="#{v.personaCliente.cedula}" />
 							</p:column>
 													
 						</p:dataTable>
@@ -182,7 +189,7 @@
 								<f:facet name="header">
 								genero
 							    </f:facet>
-								<p:outputLabel value="#{v.personaCliente.genero.nombre}" />
+								<p:outputLabel value="#{v.personaCliente.genero}" />
 							</p:column>
 							
 							<p:column>
@@ -190,6 +197,13 @@
 								fecha nacimiento
 							    </f:facet>
 								<p:outputLabel value="#{v.personaCliente.fechaNacimiento}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								edad
+							    </f:facet>
+								<p:outputLabel value="#{v.personaCliente.edad}" />
 							</p:column>
 							
 							<p:column>
@@ -260,6 +274,13 @@
 								fecha nacimiento
 							    </f:facet>
 								<p:outputLabel value="#{v.personaEmpleado.fechaNacimiento}" />
+							</p:column>
+							
+							<p:column>
+								<f:facet name="header">
+								edad
+							    </f:facet>
+								<p:outputLabel value="#{v.personaEmpleado.edad}" />
 							</p:column>
 							
 							<p:column>

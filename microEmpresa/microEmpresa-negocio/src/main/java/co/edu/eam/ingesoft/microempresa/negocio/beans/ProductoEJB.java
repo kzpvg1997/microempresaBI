@@ -3,6 +3,7 @@
  */
 package co.edu.eam.ingesoft.microempresa.negocio.beans;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -15,6 +16,7 @@ import co.edu.eam.ingesoft.microempresa.negocio.persistencia.Persistencia;
 import co.edu.ingesoft.microempresa.persistencia.entidades.Inventario;
 import co.edu.ingesoft.microempresa.persistencia.entidades.InventarioProducto;
 import co.edu.ingesoft.microempresa.persistencia.entidades.InventarioProductoPK;
+import co.edu.ingesoft.microempresa.persistencia.entidades.Persona;
 import co.edu.ingesoft.microempresa.persistencia.entidades.Producto;
 import excepciones.ExcepcionNegocio;
 
@@ -98,31 +100,13 @@ public class ProductoEJB {
 		return (List<InventarioProducto>)(Object)lista;
 	}
 	
-	public void asignarAInventario(InventarioProducto ip,int bd)throws ExcepcionNegocio{
-		conexion.setBd(bd);
-		//Buscamos el producto		
-		Producto pro = buscar(ip.getProducto().getCodigo(), bd);
-		if(pro!=null){
-			conexion.crear(ip);
-		}
-	}
-	
+		
 	public InventarioProducto buscarInventarioProducto(int idProducto, int idInventario,int bd){
 		conexion.setBd(bd);
 		InventarioProductoPK ip = new InventarioProductoPK();
 		ip.setInventario(idInventario);
 		ip.setProducto(idProducto);
 		return (InventarioProducto)conexion.buscar(InventarioProducto.class, ip);
-	}
-	
-	public void eliminarProductoInventario(InventarioProducto ip,int bd){
-		conexion.setBd(bd);
-		InventarioProducto ivp = buscarInventarioProducto(ip.getProducto().getCodigo(), ip.getInventario().getCodigo(), bd);
-		if(ivp != null){
-			conexion.eliminar(ivp);
-		}else{
-			throw new ExcepcionNegocio("No existe un producto asignado a este inventario");
-		}
 	}
 	
 	

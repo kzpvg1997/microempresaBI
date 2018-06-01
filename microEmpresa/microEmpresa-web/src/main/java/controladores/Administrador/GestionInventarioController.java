@@ -106,7 +106,7 @@ public class GestionInventarioController implements Serializable {
 	
 	public void auditoria(int codigoInv ,String accion) {
 		Date fecha = new Date();
-		String origen = "PC";
+		String origen = "CElular";
 		String navegador = "Chrome";
 		Auditoria auditoria = new Auditoria();
 		auditoria.setTabla("Inventario");

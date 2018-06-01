@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.component.html.HtmlDataTable;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.core.FeatureContext;
@@ -20,6 +21,7 @@ import org.primefaces.component.api.UIData;
 import co.edu.eam.ingesoft.microempresa.negocio.beans.AuditoriaEJB;
 import co.edu.eam.ingesoft.microempresa.negocio.beans.InventarioEJB;
 import co.edu.eam.ingesoft.microempresa.negocio.beans.ProductoEJB;
+import co.edu.eam.ingesoft.microempresa.negocio.persistencia.Persistencia;
 import co.edu.ingesoft.microempresa.persistencia.entidades.Auditoria;
 import co.edu.ingesoft.microempresa.persistencia.entidades.Inventario;
 import co.edu.ingesoft.microempresa.persistencia.entidades.InventarioProducto;
@@ -40,6 +42,9 @@ public class AsignarProductoController implements Serializable{
 	
 	@EJB
 	private ProductoEJB productoEJB;
+	
+	@EJB
+	private Persistencia persistenciaEJB;
 	
 	@EJB
 	private InventarioEJB inventarioEJB;
@@ -87,18 +92,19 @@ public class AsignarProductoController implements Serializable{
 			//if(cantidad > 0){
 				InventarioProducto ip = productoEJB.buscarInventarioProducto(p.getCodigo(),inventarioSeleccionado, sesion.getBd());
 				if(ip==null){
+					
 					Inventario i = inventarioEJB.buscar(inventarioSeleccionado, sesion.getBd());
-					Messages.addFlashGlobalInfo(i.getCodigo()+": de "+i.getLocalizacion());
 					InventarioProducto inv = new InventarioProducto();
-					inv.setCantidad(cantidad);
+					inv.setInventario(i);
+					inv.setProducto(p);
+					inv.setPersonaEmpleado(sesion.getUsuario().getPersona());
 					Date d = new Date();
 					inv.setFechaIngreso(d);
-					inv.setPersonaEmpleado(sesion.getUsuario().getPersona());
-					inv.setProducto(p);
-					inv.setInventario(i);
-					productoEJB.asignarAInventario(inv, sesion.getBd());
+					inv.setCantidad(cantidad);
+					persistenciaEJB.asignarProductoAInventario(inv);
+					auditoria(inv.getProducto().getNombre(), "Aignado a inventario: "+inv.getInventario().getCodigo());
+					
 					Messages.addFlashGlobalInfo("El producto:"+inv.getProducto().getNombre()+" Se ha agregado correctamente");
-					listarTodo();
 					productoByInventario();
 					
 				}else{
@@ -114,15 +120,12 @@ public class AsignarProductoController implements Serializable{
 		}
 	}
 	
-	public void quitarProducto(Producto p){
+	public void quitarProducto(InventarioProducto ip){
 		try{
-		InventarioProducto ip = productoEJB.buscarInventarioProducto(p.getCodigo(), inventarioSeleccionado, sesion.getBd());
-		if(ip!=null){
-			productoEJB.eliminarProductoInventario(ip, sesion.getBd());
+			persistenciaEJB.eliminarProductoInventario(ip);
+			auditoria(ip.getProducto().getNombre(), "retirado de inventario: "+ip.getInventario().getCodigo());
 			Messages.addFlashGlobalInfo("El producto se ha retirado exitosamente");
-			listarTodo();
 			productoByInventario();
-		}
 		} catch (ExcepcionNegocio e) {
 			Messages.addGlobalError(e.getMessage());
 		} catch (Exception ex) {
@@ -140,8 +143,8 @@ public class AsignarProductoController implements Serializable{
 	public void auditoria(String nombreProducto, String accion) {
 		Producto p = productoEJB.buscarByNombre(nombreProducto, sesion.getBd());
 		Date fecha = new Date();
-		String origen = "PC";
-		String navegador = "Chrome";
+		String origen = "Celular";
+		String navegador = "Mozilla";
 		Auditoria auditoria = new Auditoria();
 		auditoria.setTabla("Asignacion de Productos");
 		auditoria.setAccion(accion);
@@ -278,7 +281,6 @@ public class AsignarProductoController implements Serializable{
 	public void setTabla(UIData tabla) {
 		this.tabla = tabla;
 	}
-	
-	
+
 	
 }

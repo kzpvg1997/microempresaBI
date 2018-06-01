@@ -28,6 +28,7 @@
   		<scope>provided</scope>
   	</dependency>
 
+
 		<dependency>
 			<groupId>javax.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>
